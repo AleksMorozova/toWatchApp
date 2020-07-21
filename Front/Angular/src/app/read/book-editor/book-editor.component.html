@@ -1,0 +1,37 @@
+<div [formGroup]="bookForm">
+    <div class="ui-g">
+        <div class="ui-g-11 ui-g-nopad" style="padding: 10px">
+            <div class="ui-g">
+                <div align="center" class="ui-g-nopad">
+                    <label style="padding: 10px; font-family: OpenSans-Light,Arial,sans-serif; font-size: 24px;">Add
+                        books to read</label>
+                </div>
+            </div>
+            <div class="ui-g">
+                <div align="right" style="padding: 10px" class="ui-g-6 ui-g-nopad">
+                    <label style="padding: 10px">Title</label>
+                </div>
+                <div class="ui-g-6 ui-g-nopad">
+                    <input type="text" pInputText formControlName="title" [(ngModel)]="book.title" />
+                </div>
+            </div>
+            <div class="ui-g">
+                <div align="right" style="padding: 10px" class="ui-g-6 ui-g-nopad">
+                    <label style="padding: 10px">Description</label>
+                </div>
+                <div class="ui-g-6 ui-g-nopad">
+                    <input type="text" pInputText formControlName="description" [(ngModel)]="book.description" />
+                </div>
+                <div align="right" style="padding: 10px" class="ui-g-6 ui-g-nopad">
+                    <label style="padding: 10px">Author</label>
+                </div>
+                <div class="ui-g-6 ui-g-nopad">
+                    <input type="text" pInputText formControlName="author" [(ngModel)]="book.author"/>
+                </div>
+            </div>
+        </div>
+        <div style="padding: 10px" class="ui-g-1 ui-g-nopad">
+            <p-button label="Apply" class="ui-button-rounded" (onClick)="apply()"></p-button>
+        </div>
+    </div>
+</div>

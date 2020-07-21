@@ -1,0 +1,32 @@
+<div class="ui-g">
+    <div class="ui-g-12 ui-g-nopad" style="padding: 10px">
+        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+            <div class="ui-g-12 ui-md-7">
+                <div class="ui-g">
+                    <div class="ui-g-3 ui-sm-6">
+                        <label style="padding: 10px">Title</label>
+                    </div>
+                    <div class="ui-g-9 ui-sm-6">
+                        <span>{{movie.title}}</span>
+                    </div>
+                    <div class="ui-g-3 ui-sm-6">
+                        Url: 
+                    </div>
+                    <div class="ui-g-9 ui-sm-6">
+                        <a [href]="movie.link">{{movie.link}}</a>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-2">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+      <div formArrayName="movies">
+    <div *ngFor="let movie of movies">
+        <app-movie-brief-info [movie]="movie"></app-movie-brief-info>
+    </div>
+-->
