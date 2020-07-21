@@ -34,7 +34,7 @@ export class MoviesComponent {
   }
 
   
-  public batchUpdateTVSeries(): void {
-    this.movieService.batchUpdateTVSeries(this.movies);
+  public batchUpdateMovies(): void {
+    this.movieService.batchUpdateMovies(this.movies);
   }
 }

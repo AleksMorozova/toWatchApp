@@ -1,19 +1,38 @@
-<p-button label="Add new TV series" (onClick)="addTVSeries()"></p-button>
+<p-button label="Add new TV series" (onClick)="addTVSeries()" style="margin-bottom: 5px"></p-button>
 
 <p-table [value]="serials">
     <ng-template pTemplate="header">
         <tr>
-            <th>Title</th>
+            <th style="width:15%">Title</th>
+            <th >Description</th>
             <th style="width:10%">Season/Series</th>
-            <th>Link</th>
-            <th>Status</th>
+            <th style="width:20%">Link</th>
+            <th style="width:10%">Status</th>
             <th style="width:5%"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-serial>
         <tr>
-            <td>
-                <a (click)="selectTVSeries($event, serial, detailsPanel)">{{serial.title}}</a>
+            <td style="width:15%">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="serial.title" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{serial.title}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="serial.description" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{serial.description}}
+                    </ng-template>
+                </p-cellEditor> 
             </td>
             <td pEditableColumn style="width:10%">
                 <p-cellEditor>
@@ -33,7 +52,7 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td pEditableColumn>
+            <td pEditableColumn style="width:20%">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <input pInputText type="text" [(ngModel)]="serial.link">
@@ -43,7 +62,7 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td pEditableColumn>
+            <td pEditableColumn style="width:10%">
                 <p-cellEditor>
                     <ng-template pTemplate="input">
                         <input pInputText type="text" [(ngModel)]="serial.status">
@@ -61,28 +80,4 @@
     </ng-template>
 </p-table>
 
-<button pButton type="button" label="update" (click)="batchUpdateTVSeries()"></button>
-
-<p-overlayPanel #detailsPanel [showCloseIcon]="true">
-    <ng-template pTemplate>
-        <div class="ui-g">
-            <div class="ui-g-11 ui-g-nopad" style="padding: 10px">
-                <div class="ui-g">
-                    <div align="center" class="ui-g-nopad">
-                        <input pInputText type="text" [(ngModel)]="selectedTVSeries.title">
-                    </div>
-                </div>
-                <div class="ui-g">
-                    <div align="center" class="ui-g-nopad">
-                        <textarea rows="5" cols="30" [(ngModel)]="selectedTVSeries.description" pInputTextarea autoResize="autoResize"></textarea>
-                    </div>
-                </div>
-                <div class="ui-g">
-                    <div align="center" class="ui-g-nopad">
-                        <button pButton type="button" label="update" (click)="update($event, detailsPanel)"></button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </ng-template>
-</p-overlayPanel>
+<button pButton type="button" label="Apply" (click)="batchUpdateTVSeries()" style="margin-top: 5px"></button>

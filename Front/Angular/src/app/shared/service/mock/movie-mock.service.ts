@@ -23,8 +23,8 @@ export class MovieMockService {
     public addMovie(movie: Movie): void {
         console.log(movie.title + ' movie to watch');
     }
-    public batchUpdateTVSeries(_serials: Movie[]): any {
-        console.log('batchUpdateTVSeries in mock service are not implemented');
+    public batchUpdateMovies(_serials: Movie[]): any {
+        console.log('batchUpdateMovies in mock service are not implemented');
         return null;
     }
 }

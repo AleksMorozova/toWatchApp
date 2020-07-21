@@ -31,16 +31,6 @@ export class TVSeriesComponent {
     this.tvSeriesService.batchUpdateTVSeries(this.serials);
   }
 
-  public update(event, overlaypanel: OverlayPanel): void {
-    this.watchTVSeries(this.selectedTVSeries);
-    overlaypanel.toggle(event);
-  }
-
-  selectTVSeries(event, tvSeries: TVSeries, overlaypanel: OverlayPanel) {
-    this.selectedTVSeries = tvSeries;
-    overlaypanel.toggle(event);
-  }
-
   public watchTVSeries(tvSeries: TVSeries): void {
     this.tvSeriesService.updateTVSeries(tvSeries);
   }

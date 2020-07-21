@@ -27,11 +27,10 @@ export class MovieService {
 
     public addMovie(movie: Movie): void {
         movie.isWatched = false;
-        console.log('Insert movie=>   ', movie);
         this.moviesRESTService.insert(movie);
     }
 
-    public batchUpdateTVSeries(movies: Movie[]): any {
+    public batchUpdateMovies(movies: Movie[]): any {
         return this.moviesRESTService.batchUpdate(movies);
     }
 }
