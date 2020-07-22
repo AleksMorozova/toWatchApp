@@ -20,11 +20,15 @@ const routes: Routes = [
     path: 'english',
     loadChildren: () => import('./english/english.module').then(m => m.EnglishModule),
     data: { preload: true }
-  }
-  ,
+  },
   {
     path: 'read',
     loadChildren: () => import('./read/read.module').then(m => m.ReadModule),
+    data: { preload: true }
+  },
+  {
+    path: 'favorite',
+    loadChildren: () => import('./favorite/favorite.module').then(m => m.FavoriteModule),
     data: { preload: true }
   },
   //   { path: '', component: } //  somw home component could be added
