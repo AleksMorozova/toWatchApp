@@ -26,11 +26,25 @@ namespace MyToDoApp.Controllers
         [HttpPost("bulkUpdate")]
         public void Post([FromBody] List<TVSeries> serials)
         {
+            tvSeriesService.bulkUpdate(serials);
         }
 
-        [HttpPost("update")]
-        public void Post([FromBody] TVSeries tvSeries)
+        [HttpPost("watch")]
+        public void watch([FromBody] TVSeries tvSeries)
         {
+            tvSeriesService.watchTVSeries(tvSeries);
+        }
+
+        [HttpPost("reWatch")]
+        public void reWatch([FromBody] TVSeries tvSeries)
+        {
+            tvSeriesService.reWatchTVSeries(tvSeries);
+        }
+
+        [HttpPost("add")]
+        public void add([FromBody] TVSeries tvSeries)
+        {
+            tvSeriesService.addSeries(tvSeries);
         }
     }
 }

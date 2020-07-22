@@ -32,10 +32,14 @@ export class TVSeriesComponent {
   }
 
   public watchTVSeries(tvSeries: TVSeries): void {
-    this.tvSeriesService.updateTVSeries(tvSeries);
+    this.tvSeriesService.watchTVSeries(tvSeries);
+  }
+
+  public reWatchTVSeries(tvSeries: TVSeries): void {
+    this.tvSeriesService.reWatchTVSeries(tvSeries);
   }
 
   public addToFavorite(tvSeries: TVSeries): void {
-    this.tvSeriesService.updateTVSeries(tvSeries);
+    this.tvSeriesService.addToFavorite(tvSeries);
   }
 }

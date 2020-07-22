@@ -41,5 +41,25 @@ namespace MyToDoApp.Repositories_EF
             }
             return series;
         }
+
+        public List<Model.TVSeries> getAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void add(Model.TVSeries tvSeries)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void update(Model.TVSeries tvSeries)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void bulkUpdate(List<Model.TVSeries> tvSeries)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

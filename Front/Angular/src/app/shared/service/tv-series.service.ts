@@ -24,8 +24,18 @@ export class TVSeriesService {
         });
     }
     
-    public updateTVSeries(tvSeries: TVSeries): any {
-        return this.tvSeriesRESTService.update(tvSeries);
+    public watchTVSeries(tvSeries: TVSeries): any {
+        tvSeries.isWatched = true;
+        return this.tvSeriesRESTService.watch(tvSeries);
+    }
+
+    public reWatchTVSeries(tvSeries: TVSeries): any {
+        tvSeries.isWatched = false;
+        return this.tvSeriesRESTService.reWatch(tvSeries);
+    }
+
+    public addToFavorite(tvSeries: TVSeries): any {
+        return null; // this.tvSeriesRESTService.update(tvSeries);
     }
 
     public batchUpdateTVSeries(serials: TVSeries[]): any {

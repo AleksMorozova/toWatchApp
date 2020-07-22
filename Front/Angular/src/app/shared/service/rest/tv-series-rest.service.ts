@@ -19,11 +19,16 @@ export class TVSeriesRESTService {
         });
     }
 
-    public insert (_tvSeries: TVSeries): any {
+    public insert (tvSeries: TVSeries): any {
+        return this.http.post<any>('https://localhost:44308/TVSeries/add', JSON.stringify(tvSeries), TVSeriesRESTService.httpOptions).toPromise();
     }
 
-    public update(tvSeries: TVSeries): any {
-        return this.http.post<any>('https://localhost:44308/TVSeries/update', JSON.stringify(tvSeries), TVSeriesRESTService.httpOptions).toPromise();
+    public reWatch(tvSeries: TVSeries): any {
+        return this.http.post<any>('https://localhost:44308/TVSeries/reWatch', JSON.stringify(tvSeries), TVSeriesRESTService.httpOptions).toPromise();
+    }
+
+    public watch(tvSeries: TVSeries): any {
+        return this.http.post<any>('https://localhost:44308/TVSeries/watch', JSON.stringify(tvSeries), TVSeriesRESTService.httpOptions).toPromise();
     }
 
     public batchUpdate(tvSerials: TVSeries[]): any {

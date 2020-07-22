@@ -17,12 +17,11 @@ namespace MyToDoApp.Repositories
         }
         public List<Movie> getMoviesToWatch()
         {
-            List<Movie> movies = new List<Movie>();
-            foreach (EF.Model.Movie movie in context.Movies.Where(m => m.isWatched == false))
+            List<Model.Movie> movies = new List<Model.Movie>();
+            foreach (EF.Model.Movie movie in context.Movies) // .Where(m => m.isWatched == false))
             {
                 movies.Add(MovieConverter.convertFromDTO(movie));
             }
-
             return movies;
         }
         public void update(Movie movie)

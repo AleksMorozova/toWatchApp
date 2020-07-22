@@ -8,7 +8,7 @@
             <th style="width:10%">Season/Series</th>
             <th style="width:20%">Link</th>
             <th style="width:10%">Status</th>
-            <th style="width:5%"></th>
+            <th style="width:7%"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-serial>
@@ -72,9 +72,10 @@
                     </ng-template>
                 </p-cellEditor>
             </td>
-            <td style="width:5%">
-                <p-button (onClick) = "watchTVSeries(serial)" icon="pi pi-check" > </p-button>
-                <p-button (onClick) = "addToFavorite(serial)" icon="pi pi-star" > </p-button>
+            <td style="width:7%">
+                <p-button *ngIf = "serial.isWatched" style="margin: 2px" (onClick) = "watchTVSeries(serial)" icon="pi pi-check" > </p-button>
+                <p-button *ngIf = "!serial.isWatched" style="margin: 2px" (onClick) = "reWatchTVSeries(serial)" icon="pi pi-refresh" > </p-button>
+                <p-button icon="pi pi-star" (onClick)="addToFavorite(serial)"> </p-button>
             </td>
         </tr>
     </ng-template>

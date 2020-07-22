@@ -21,15 +21,19 @@ export class MoviesComponent {
     });
   }
 
-  public watchFilm(movie: Movie): void {
+  public watchMovie(movie: Movie): void {
     this.movieService.watchMovie(movie);
+  }
+
+  public reWatchMovie(movie: Movie): void {
+    this.movieService.reWatchMovie(movie);
   }
 
   public addToFavorite(movie: Movie): void {
     this.movieService.watchMovie(movie);
   }
 
-  public addFilm(): void {
+  public addMovie(): void {
     this.router.navigate(['addMovie'], { relativeTo: this.route });
   }
 

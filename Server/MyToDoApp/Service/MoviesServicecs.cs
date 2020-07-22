@@ -11,6 +11,7 @@ namespace MyToDoApp.Service
     {
         List<Movie> getMoviesToWatch();
         void watchMovie(Movie movie);
+        void reWatchMovie(Movie movie);
         void addMovie(Movie movie);
         void bulkUpdate(List<Movie> movie);
     }
@@ -39,7 +40,14 @@ namespace MyToDoApp.Service
             return this.moviesRepository.getMoviesToWatch();
         }
 
+        public void reWatchMovie(Movie movie)
+        {
+            movie.IsWatched = false;
+            this.moviesRepository.update(movie);
+        }
+
         public void watchMovie(Movie movie) {
+            movie.IsWatched = true;
             this.moviesRepository.update(movie);
         }
     }

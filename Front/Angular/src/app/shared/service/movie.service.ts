@@ -21,12 +21,14 @@ export class MovieService {
     }
 
     public watchMovie(movie: Movie): void {
-        movie.isWatched = true;
-        return this.moviesRESTService.update(movie);
+        return this.moviesRESTService.watch(movie);
+    }
+
+    public reWatchMovie(movie: Movie): void {
+        return this.moviesRESTService.reWatch(movie);
     }
 
     public addMovie(movie: Movie): void {
-        movie.isWatched = false;
         this.moviesRESTService.insert(movie);
     }
 

@@ -23,8 +23,12 @@ export class MoviesRESTService {
         return this.http.post<any>('https://localhost:44308/Movies/add', JSON.stringify(movie), MoviesRESTService.httpOptions).toPromise();
     }
 
-    public update(movie: Movie): any {
-        return this.http.post<any>('https://localhost:44308/Movies/update', JSON.stringify(movie), MoviesRESTService.httpOptions).toPromise();
+    public watch(movie: Movie): any {
+        return this.http.post<any>('https://localhost:44308/Movies/watch', JSON.stringify(movie), MoviesRESTService.httpOptions).toPromise();
+    }
+
+    public reWatch(movie: Movie): any {
+        return this.http.post<any>('https://localhost:44308/Movies/reWatch', JSON.stringify(movie), MoviesRESTService.httpOptions).toPromise();
     }
 
     public batchUpdate(movies: Movie[]): any {

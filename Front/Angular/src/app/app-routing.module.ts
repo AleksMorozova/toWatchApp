@@ -12,11 +12,6 @@ const routes: Routes = [
     data: { preload: true }
   },
   {
-    path: 'archive',
-    loadChildren: () => import('./archive/archive.module').then(m => m.ArchiveModule),
-    data: { preload: true }
-  },
-  {
     path: 'english',
     loadChildren: () => import('./english/english.module').then(m => m.EnglishModule),
     data: { preload: true }

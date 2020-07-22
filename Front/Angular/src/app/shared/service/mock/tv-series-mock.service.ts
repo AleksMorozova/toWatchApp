@@ -15,11 +15,11 @@ export class TVSeriesMockService {
             const serials: TVSeries[] = [
                 {
                     title: 'once upon a time', season: '1', series: '1', status: '1', link: '',
-                    description: 'Description for once upon a time'
+                    description: 'Description for once upon a time', isWatched: true
                 },
                 {
                     title: '2 broke girls', season: '1', series: '1', status: '1', link: '',
-                    description: 'Description for 2 broke girls'
+                    description: 'Description for 2 broke girls', isWatched: false
                 }];
             resolve(serials);
         });

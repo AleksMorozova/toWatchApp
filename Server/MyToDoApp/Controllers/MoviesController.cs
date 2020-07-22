@@ -31,12 +31,21 @@ namespace MyToDoApp.Controllers
             moviesService.bulkUpdate(movies);
         }
 
-        [HttpPost("update")]
-        public IActionResult update([FromBody] Movie movie)
+        [HttpPost("watch")]
+        public IActionResult watch([FromBody] Movie movie)
         {
             moviesService.watchMovie(movie);
             return Ok(movie);
         }
+
+
+        [HttpPost("reWatch")]
+        public IActionResult reWatch([FromBody] Movie movie)
+        {
+            moviesService.reWatchMovie(movie);
+            return Ok(movie);
+        }
+
 
         [HttpPost("add")]
         public void add([FromBody] Movie movie)

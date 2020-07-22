@@ -5,4 +5,5 @@ export class TVSeries {
     public status: string;
     public description: string;
     public link: string;
+    public isWatched: boolean;
 }

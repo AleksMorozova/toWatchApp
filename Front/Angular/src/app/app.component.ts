@@ -11,7 +11,6 @@ export class AppComponent {
     {label: 'To watch', routerLink:'watch'},
     {label: 'To read', routerLink:'read'},
     {label: 'English', routerLink:'english'},
-    {label: 'Archive', routerLink:'archive'},
     {label: 'Favorite', routerLink:'favorite'},
     {label: 'About', routerLink:'about'}
 ];
