@@ -20,19 +20,20 @@ namespace MyToDoApp.Controllers
         }
 
         [HttpGet("toWatch")]
-        public List<Movie> getToMoviesWatch()
+        public async Task<IActionResult> GetMoviesToWatch()
         {
-            return moviesService.getMoviesToWatch();
+            return Ok(moviesService.getMoviesToWatch());
         }
 
         [HttpPost("bulkUpdate")]
-        public void bulkUpdate([FromBody] List<Movie> movies)
+        public async Task<IActionResult> UpdateAll([FromBody] List<Movie> movies)
         {
             moviesService.bulkUpdate(movies);
+            return Ok(movies);
         }
 
         [HttpPost("watch")]
-        public IActionResult watch([FromBody] Movie movie)
+        public async Task<IActionResult> WatchMovie([FromBody] Movie movie)
         {
             moviesService.watchMovie(movie);
             return Ok(movie);
@@ -40,7 +41,7 @@ namespace MyToDoApp.Controllers
 
 
         [HttpPost("reWatch")]
-        public IActionResult reWatch([FromBody] Movie movie)
+        public async Task<IActionResult> ReWatchMovie([FromBody] Movie movie)
         {
             moviesService.reWatchMovie(movie);
             return Ok(movie);
@@ -48,9 +49,10 @@ namespace MyToDoApp.Controllers
 
 
         [HttpPost("add")]
-        public void add([FromBody] Movie movie)
+        public async Task<IActionResult> AddMovie([FromBody] Movie movie)
         {
             moviesService.addMovie(movie);
+            return Ok(movie);
         }
     }
 }

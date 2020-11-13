@@ -5,18 +5,42 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
+using MyToDoApp.Service;
 
 namespace MyToDoApp.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class TEDTalksController : ControllerBase
     {
-        [HttpGet]
-        public List<TEDTalk> Get()
+        private ITedTalksService tedTalksService;
+        public TEDTalksController(ITedTalksService tedTalksService)
         {
-            TEDTalk t = new TEDTalk();
-            return new List<TEDTalk>() { t };
+            this.tedTalksService = tedTalksService;
+        }
+
+        [HttpGet("toWatch")]
+        public IActionResult getToWatch()
+        {
+            return Ok(tedTalksService.getAllTEDTalks());
+        }
+
+        [HttpPost("bulkUpdate")]
+        public async Task<IActionResult> BulkUpdate([FromBody] List<TEDTalk> talks)
+        {
+            return Ok();
+        }
+
+        [HttpPost("update")]
+        public async Task<IActionResult> Update([FromBody] TEDTalk talk)
+        {
+            return Ok();
+        }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> Add([FromBody] TEDTalk talk)
+        {
+            return Ok();
         }
     }
 }

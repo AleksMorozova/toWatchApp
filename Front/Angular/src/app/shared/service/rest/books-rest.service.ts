@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Book } from './../../model/Book.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,7 @@ export class BooksRESTService {
 
     public loadActive(): Promise<Book[]> {
         return new Promise<Book[]>((resolve, reject) => {
-            this.http.get('https://localhost:44308/Books/all').subscribe((res: Book[]) => resolve(res));
+            this.http.get('https://localhost:44308/Books/toRead').subscribe((res: Book[]) => resolve(res));
         });
     }
 

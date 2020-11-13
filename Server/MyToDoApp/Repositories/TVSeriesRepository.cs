@@ -9,6 +9,5 @@ namespace MyToDoApp.Repositories
         void add(TVSeries tvSeries);
         void update(TVSeries tvSeries);
         void bulkUpdate(List<TVSeries> tvSeries);
-
     }
 }

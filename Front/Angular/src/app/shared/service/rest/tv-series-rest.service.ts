@@ -15,7 +15,7 @@ export class TVSeriesRESTService {
 
     public loadActive(): Promise<TVSeries[]> {
         return new Promise<TVSeries[]>((resolve, reject) => {
-            this.http.get('https://localhost:44308/TVSeries/all').subscribe((res: TVSeries[]) => resolve(res));
+            this.http.get('https://localhost:44308/TVSeries/toWatch').subscribe((res: TVSeries[]) => resolve(res));
         });
     }
 

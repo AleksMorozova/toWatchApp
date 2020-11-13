@@ -2,9 +2,7 @@ import { Book } from "../model/Book.model";
 import { Injectable } from "@angular/core";
 import { BooksRESTService } from './rest/books-rest.service';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable()
 export class BooksService {
 
     constructor(protected booksRESTService: BooksRESTService) {
@@ -30,7 +28,6 @@ export class BooksService {
     public batchUpdateBooks(books: Book[]): any {
         return this.booksRESTService.batchUpdate(books);
     }
-
     
     public addBook(book: Book): any {
         return this.booksRESTService.insert(book);

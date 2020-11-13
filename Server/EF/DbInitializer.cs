@@ -21,7 +21,7 @@ namespace EF
             var movies = new Movie[]
             {
                 new Movie {Title = "Царство красоты", Description = "Люк Саваж — молодой архитектор и примерный семьянин, который считает себя самым счастливым человеком, поскольку он женат на любимой женщине и делает огромные успехи в карьере. Он очень доволен своей жизнью, но однажды его налаженному быту приходит конец. ",
-                Link = "http://baskino.me/films/dramy/11642-carstvo-krasoty.html", isWatched = false}
+                Link = "http://baskino.me/films/dramy/11642-carstvo-krasoty.html", IsWatched = false}
             };
 
             context.Movies.AddRange(movies);
@@ -36,7 +36,7 @@ namespace EF
             var tvSerials = new TVSeries[]
             {
                 new TVSeries {Title = "CSI: Miami", Description = "Преступления совершаются круглосуточно, а на их раскрытие требуется время. ",
-                Link = "http://seasonvar.ru/serial-473-Mesto_prestupleniya_Majami-00001-sezon.html", isWatched = false, Season = "1", Series = "4"}
+                Link = "http://seasonvar.ru/serial-473-Mesto_prestupleniya_Majami-00001-sezon.html", IsWatched = false, Season = "1", Series = "4"}
             };
 
             context.TVSerials.AddRange(tvSerials);
@@ -51,7 +51,7 @@ namespace EF
 
             var tedTalks = new TEDTalk[]
             {
-                new TEDTalk {Title = "Inside the mind of a master procrastinator", isWatched = false, Link = "https://www.youtube.com/watch?v=arj7oStGLkU&list=PLiAqvMJOAIKtu5ZENVgZ_ewYJX3crpTVU"}
+                new TEDTalk {Title = "Inside the mind of a master procrastinator", IsWatched = false, Link = "https://www.youtube.com/watch?v=arj7oStGLkU&list=PLiAqvMJOAIKtu5ZENVgZ_ewYJX3crpTVU"}
             };
 
             context.TEDTalks.AddRange(tedTalks);

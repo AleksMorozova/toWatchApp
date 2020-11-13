@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
 using MyToDoApp.Service;
@@ -16,35 +17,39 @@ namespace MyToDoApp.Controllers
             this.tvSeriesService = tvSeriesService;
         }
 
-        [HttpGet("all")]
-        public List<TVSeries> GetToWatch()
+        [HttpGet("toWatch")]
+        public async Task<IActionResult> GetSeriesToWatch()
         {
-            
-            return tvSeriesService.getAllSeries();
+            return Ok(tvSeriesService.getAllSeries());
         }
 
+
         [HttpPost("bulkUpdate")]
-        public void Post([FromBody] List<TVSeries> serials)
+        public async Task<IActionResult> UpdateAll([FromBody] List<TVSeries> serials)
         {
             tvSeriesService.bulkUpdate(serials);
+            return Ok(serials);
         }
 
         [HttpPost("watch")]
-        public void watch([FromBody] TVSeries tvSeries)
+        public async Task<IActionResult> WatchTvSeries([FromBody] TVSeries tvSeries)
         {
             tvSeriesService.watchTVSeries(tvSeries);
+            return Ok(tvSeries);
         }
 
         [HttpPost("reWatch")]
-        public void reWatch([FromBody] TVSeries tvSeries)
+        public async Task<IActionResult> ReWatchTvSeries([FromBody] TVSeries tvSeries)
         {
             tvSeriesService.reWatchTVSeries(tvSeries);
+            return Ok(tvSeries);
         }
 
         [HttpPost("add")]
-        public void add([FromBody] TVSeries tvSeries)
+        public async Task<IActionResult> AddTVSeries([FromBody] TVSeries tvSeries)
         {
             tvSeriesService.addSeries(tvSeries);
+            return Ok(tvSeries);
         }
     }
 }

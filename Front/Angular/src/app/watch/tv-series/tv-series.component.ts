@@ -27,7 +27,7 @@ export class TVSeriesComponent {
     this.router.navigate(['addTVSeries'], { relativeTo: this.route });
   }
 
-  public batchUpdateTVSeries(): void {
+  public save(): void {
     this.tvSeriesService.batchUpdateTVSeries(this.serials);
   }
 

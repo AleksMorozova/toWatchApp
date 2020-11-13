@@ -20,6 +20,9 @@ export class BookEditorComponent {
 
     ngOnInit() {
         this.initForm();
+        window.top.addEventListener('placeChangedIn', this.evenListener.bind(this), false);
+        window.top.dispatchEvent(new CustomEvent('placeChangedIn'));
+
     }
 
     initForm() {
@@ -30,6 +33,9 @@ export class BookEditorComponent {
         });
     }
 
+    public evenListener() {
+        console.log('TADA even is fire');
+    }
     public apply(): void {
         this.booksService.addBook(this.book);
         this.router.navigate(['book']);

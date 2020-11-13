@@ -1,6 +1,7 @@
-<p-button label="Add new movie" (onClick)="addMovie()" style="margin-bottom: 5px"></p-button>
-
 <p-table [value]="movies">
+    <ng-template pTemplate="caption">
+        Movies
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th style="width:15%">Movie</th>
@@ -26,7 +27,7 @@
                     <ng-template pTemplate="input">
                         <input pInputText type="text" [(ngModel)]="movie.description" required>
                     </ng-template>
-                    <ng-template pTemplate="output"> 
+                    <ng-template pTemplate="output">
                         {{movie.description}}
                     </ng-template>
                 </p-cellEditor>
@@ -42,11 +43,24 @@
                 </p-cellEditor>
             </td>
             <td style="width:7%">
-                <p-button *ngIf = "movie.isWatched" style="margin: 2px" (onClick) = "watchMovie(movie)" icon="pi pi-check" > </p-button>
-                <p-button *ngIf = "!movie.isWatched" (onClick) = "reWatchMovie(movie)" icon="pi pi-refresh" > </p-button>
-                <p-button icon="pi pi-star" style="margin: 2px" (onClick)="addToFavorite(movie)"> </p-button>
+                <div style="text-align:left">
+                    <button *ngIf="!movie.isWatched" style="margin:5px" type="button" pButton icon="pi pi-check"
+                        (click)="watchMovie(movie)"></button>
+                    <button *ngIf="movie.isWatched" style="margin:5px" type="button" pButton icon="pi pi-refresh"
+                        (click)="reWatchMovie(movie)"></button>
+                    <button style="margin:5px" type="button" pButton icon="pi pi-star"
+                        (click)="addToFavorite(movie)"></button>
+                </div>
             </td>
         </tr>
     </ng-template>
+
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-plus" (click)="addMovie()"
+                label="Add"></button>
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-save" (click)="save()"
+                label="Save"></button>
+        </div>
+    </ng-template>
 </p-table>
-<p-button label="Apply" (onClick)="batchUpdateMovies()" style="margin-top: 5px"> </p-button>

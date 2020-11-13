@@ -19,13 +19,16 @@ export class ReadComponent {
     this.booksService.loadBooks().then(res => {
       this.books = res;
     });
+    window.top.addEventListener('placeChangedIn', this.evenListener.bind(this), false);
   }
-
+  public evenListener() {
+    console.log('TADA even is fire from other component');
+}
   public readBook(book: Book): void {
     this.booksService.updateBook(book);
   }
 
-  public updateBooks(): void {
+  public save(): void {
     this.booksService.batchUpdateBooks(this.books);
   }
 

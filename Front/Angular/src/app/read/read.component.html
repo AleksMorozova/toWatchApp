@@ -1,6 +1,7 @@
-<p-button label="Add new book" (click) = "addBook()"></p-button>
-
 <p-table [value]="books">
+    <ng-template pTemplate="caption">
+        Books
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th>Title</th>
@@ -15,10 +16,21 @@
             <td> {{ book.author }} </td>
             <td> {{ book.description }} </td>
             <td style="width:7%">
-                <p-button (onClick) = "readBook(book)" icon="pi pi-check" > </p-button>
-                <p-button (onClick) = "addToFavorite(book)" icon="pi pi-star" > </p-button>
+                <div style="text-align:left">
+                    <button style="margin:5px" type="button" pButton icon="pi pi-check" (click)="readBook()"></button>
+                    <button style="margin:5px" type="button" pButton icon="pi pi-star"
+                        (click)="addToFavorite(book)"></button>
+                </div>
             </td>
         </tr>
     </ng-template>
-</p-table> 
-<p-button label="Save 111" icon="fa fa-check" iconPos="left" (click) = "updateBooks()"> </p-button>
+
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-plus" (click)="addBook()"
+                label="Add"></button>
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-save" (click)="save()"
+                label="Save"></button>
+        </div>
+    </ng-template>
+</p-table>

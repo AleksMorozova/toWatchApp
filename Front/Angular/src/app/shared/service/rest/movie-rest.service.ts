@@ -15,7 +15,7 @@ export class MoviesRESTService {
 
     public loadActive(): Promise<Movie[]> {
         return new Promise<Movie[]>((resolve, reject) => {
-            this.http.get('https://localhost:44308/Movies/all').subscribe((res: Movie[]) => resolve(res));
+            this.http.get('https://localhost:44308/Movies/toWatch').subscribe((res: Movie[]) => resolve(res));
         });
     }
 

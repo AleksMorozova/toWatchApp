@@ -17,22 +17,8 @@ namespace MyToDoApp.Repositories_EF
         {
             this.context = context;
         }
-        public void addSeries(Model.TVSeries series)
-        {
-            using (var c = context)
-            {
-                c.TVSerials.Add(TVSeriesConverter.convertToDTO(series));
-                c.SaveChanges();
-            }
-        }
 
-
-        public void updateTVSeries(Model.TVSeries tvSeries)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Model.TVSeries> getAllSeries()
+        public List<Model.TVSeries> getAll()
         {
             List<Model.TVSeries> series = new List<Model.TVSeries>();
             foreach (EF.Model.TVSeries serial in context.TVSerials)
@@ -42,14 +28,13 @@ namespace MyToDoApp.Repositories_EF
             return series;
         }
 
-        public List<Model.TVSeries> getAll()
-        {
-            throw new NotImplementedException();
-        }
-
         public void add(Model.TVSeries tvSeries)
         {
-            throw new NotImplementedException();
+            using (var c = context)
+            {
+                c.TVSerials.Add(TVSeriesConverter.convertToDTO(tvSeries));
+                c.SaveChanges();
+            }
         }
 
         public void update(Model.TVSeries tvSeries)

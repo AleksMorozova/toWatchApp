@@ -1,10 +1,11 @@
-<p-button label="Add new TV series" (onClick)="addTVSeries()" style="margin-bottom: 5px"></p-button>
-
 <p-table [value]="serials">
+    <ng-template pTemplate="caption">
+        TV shows
+    </ng-template>
     <ng-template pTemplate="header">
         <tr>
             <th style="width:15%">Title</th>
-            <th >Description</th>
+            <th>Description</th>
             <th style="width:10%">Season/Series</th>
             <th style="width:20%">Link</th>
             <th style="width:10%">Status</th>
@@ -32,7 +33,7 @@
                     <ng-template pTemplate="output">
                         {{serial.description}}
                     </ng-template>
-                </p-cellEditor> 
+                </p-cellEditor>
             </td>
             <td pEditableColumn style="width:10%">
                 <p-cellEditor>
@@ -73,12 +74,24 @@
                 </p-cellEditor>
             </td>
             <td style="width:7%">
-                <p-button *ngIf = "serial.isWatched" style="margin: 2px" (onClick) = "watchTVSeries(serial)" icon="pi pi-check" > </p-button>
-                <p-button *ngIf = "!serial.isWatched" style="margin: 2px" (onClick) = "reWatchTVSeries(serial)" icon="pi pi-refresh" > </p-button>
-                <p-button icon="pi pi-star" (onClick)="addToFavorite(serial)"> </p-button>
+                <div style="text-align:left">
+                    <button *ngIf="!serial.isWatched" style="margin:5px" type="button" pButton icon="pi pi-check"
+                        (click)="watchTVSeries(serial)"></button>
+                    <button *ngIf="serial.isWatched" style="margin:5px" type="button" pButton icon="pi pi-refresh"
+                        (click)="reWatchTVSeries(serial)"></button>
+                    <button style="margin:5px" type="button" pButton icon="pi pi-star"
+                        (click)="addToFavorite(serial)"></button>
+                </div>
             </td>
         </tr>
     </ng-template>
-</p-table>
 
-<button pButton type="button" label="Apply" (click)="batchUpdateTVSeries()" style="margin-top: 5px"></button>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-plus" (click)="addTVSeries()"
+                label="Add"></button>
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-save" (click)="save()"
+                label="Save"></button>
+        </div>
+    </ng-template>
+</p-table>

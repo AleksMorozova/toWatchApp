@@ -15,6 +15,7 @@ namespace MyToDoApp
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine("APP is started");
             var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
             host.Run();
@@ -36,7 +37,7 @@ namespace MyToDoApp
                 try
                 {
                     var context = services.GetRequiredService<ApplicationContext>();
-                    // context.Database.EnsureDeleted();
+                    context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
                     DbInitializer.Initialize(context);
                 }

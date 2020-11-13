@@ -1,0 +1,49 @@
+<p-table [value]="talks">
+    <ng-template pTemplate="caption">
+        TED Talks
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th style="width:15%">Talk</th>
+            <th style="width:20%">Link</th>
+            <th style="width:7%"></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-talk>
+        <tr>
+            <td pEditableColumn style="width:15%">
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="talk.title" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        {{talk.title}}
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td pEditableColumn>
+                <p-cellEditor>
+                    <ng-template pTemplate="input">
+                        <input pInputText type="text" [(ngModel)]="talk.link" required>
+                    </ng-template>
+                    <ng-template pTemplate="output">
+                        <a [href]="talk.link">{{talk.link}}</a>
+                    </ng-template>
+                </p-cellEditor>
+            </td>
+            <td style="width:7%">
+                <div style="text-align:left">
+                    <button *ngIf="!talk.isWatched" style="margin:5px" type="button" pButton icon="pi pi-check" (click)="watchTalk()"></button>
+                    <button *ngIf="talk.isWatched" style="margin:5px" type="button" pButton icon="pi pi-refresh" (click)="reWatchTalk()"></button>
+                    <button style="margin:5px" type="button" pButton icon="pi pi-star" (click)="addToFavorite()"></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary" let-rowData>
+        <div style="text-align:left">
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-plus" (click)="showDialogToAdd()" label="Add"></button>
+            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-save" (click)="save()" label="Save"></button>
+        </div>
+    </ng-template>
+</p-table>

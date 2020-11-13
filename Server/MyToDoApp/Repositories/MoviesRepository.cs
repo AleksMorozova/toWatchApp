@@ -1,5 +1,4 @@
-﻿using EF;
-using MyToDoApp.Model;
+﻿using MyToDoApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

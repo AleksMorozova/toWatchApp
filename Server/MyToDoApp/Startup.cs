@@ -30,11 +30,13 @@ namespace MyToDoApp
             services.AddScoped<IMoviesService, MoviesService>();
             services.AddScoped<ITVSeriesService, TVSeriesService>();
             services.AddScoped<IBooksService, BooksService>();
+            services.AddScoped<ITedTalksService, TedTalksService>();
 
             // Repositories
             services.AddScoped<IMoviesRepository, MoviesRepositoryDapper>();
             services.AddScoped<ITVSeriesRepository, TVSeriesRepositoryEF>();
             services.AddScoped<IBooksRepository, BooksRepositoryEF>();
+            services.AddScoped<ITedTalksRepository, TedTalksRepositoryEF>();
 
             services.AddDbContext<ApplicationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext")));

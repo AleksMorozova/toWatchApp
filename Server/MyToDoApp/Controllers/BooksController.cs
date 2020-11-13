@@ -19,26 +19,26 @@ namespace MyToDoApp.Controllers
             this.booksService = booksService;
         }
 
-        [HttpGet("all")]
-        public IEnumerable<Book> Get()
+        [HttpGet("toRead")]
+        public IEnumerable<Book> GetToRead()
         {
             return booksService.getAllBooks();
         }
 
         [HttpPost("bulkUpdate")]
-        public void Post([FromBody] List<Book> books)
+        public void UpdateAll([FromBody] List<Book> books)
         {
             this.booksService.bulkUpdate(books);
         }
 
         [HttpPost("update")]
-        public void Post([FromBody] Book book)
+        public void ReadBook([FromBody] Book book)
         {
             this.booksService.readBook(book);
         }
 
         [HttpPost("add")]
-        public void add([FromBody] Book book)
+        public void AddBook([FromBody] Book book)
         {
             this.booksService.addBook(book);
         }

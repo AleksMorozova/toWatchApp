@@ -14,7 +14,7 @@ namespace MyToDoApp.Converters
             m.Description = movie.Description;
             m.Link = movie.Link;
             m.ID = movie.ID;
-            m.IsWatched = movie.isWatched;
+            m.IsWatched = movie.IsWatched;
             return m;
         }
         public static EF.Model.Movie convertToDTO(MyToDoApp.Model.Movie movie)
@@ -24,7 +24,7 @@ namespace MyToDoApp.Converters
             m.Description = movie.Description;
             m.Link = movie.Link;
             m.ID = movie.ID;
-            m.isWatched = movie.IsWatched;
+            m.IsWatched = movie.IsWatched;
             return m;
         }
     }

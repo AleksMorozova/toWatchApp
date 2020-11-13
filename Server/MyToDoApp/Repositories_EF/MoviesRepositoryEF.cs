@@ -21,13 +21,14 @@ namespace MyToDoApp.Repositories
             foreach (EF.Model.Movie movie in context.Movies) // .Where(m => m.isWatched == false))
             {
                 movies.Add(MovieConverter.convertFromDTO(movie));
+                // context.Database.
             }
             return movies;
         }
         public void update(Movie movie)
         {
             var m = context.Movies.Where(m => movie.ID == m.ID).First();
-            m.isWatched = movie.IsWatched;
+            m.IsWatched = movie.IsWatched;
             m.Link = movie.Link;
             m.Title = movie.Title;
             m.Description = movie.Description;
@@ -46,7 +47,7 @@ namespace MyToDoApp.Repositories
         {
             foreach (Movie movie in movies) {
                 var m = context.Movies.Where(m => movie.ID == m.ID).First();
-                m.isWatched = movie.IsWatched;
+                m.IsWatched = movie.IsWatched;
                 m.Link = movie.Link;
                 m.Title = movie.Title;
                 m.Description = movie.Description;
