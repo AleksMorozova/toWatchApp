@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MenuItem} from 'primeng/api';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,27 @@ import {MenuItem} from 'primeng/api';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  items: MenuItem[] = [
-    {label: 'To watch', routerLink:'watch'},
-    {label: 'To read', routerLink:'read'},
-    {label: 'English', routerLink:'english'},
-    {label: 'Favorite', routerLink:'favorite'},
-    {label: 'About', routerLink:'about'}
+  items = [
+    {label: 'Computer'},
+    {label: 'Notebook'},
+    {label: 'Accessories'},
+    {label: 'Backpacks'},
+    {label: 'Item'}
 ];
-
   title = 'My todo app';
+  home = {icon: 'pi pi-home', routerLink: '/'};
+
+  constructor() {
+    const subject = new Subject<number>();
+
+    subject.subscribe({
+      next: (v) => console.log(`observerA: ${v}`)
+    });
+    subject.subscribe({
+      next: (v) => console.log(`observerB: ${v}`)
+    });
+    
+    // subject.next(1);
+    subject.next(2);
+  }
 }

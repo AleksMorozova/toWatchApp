@@ -2,7 +2,9 @@ import { Movie } from '../model/Movie.model';
 import { Injectable } from '@angular/core';
 import { MoviesRESTService } from './rest/movie-rest.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+  })
 export class MovieService {
     constructor(protected moviesRESTService: MoviesRESTService) {
     }

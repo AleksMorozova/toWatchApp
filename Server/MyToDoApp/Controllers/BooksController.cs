@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
 using MyToDoApp.Service;
-
 
 namespace MyToDoApp.Controllers
 {
@@ -17,6 +17,12 @@ namespace MyToDoApp.Controllers
         public BooksController(IBooksService booksService)
         {
             this.booksService = booksService;
+        }
+
+        [HttpGet("read")]
+        public Book Index(int id)
+        {
+            return this.booksService.getAllBooks().ElementAt(0);
         }
 
         [HttpGet("toRead")]

@@ -1,18 +1,21 @@
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AboutComponent } from './about-component/about.component';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TabViewModule } from 'primeng/tabview';
 import { ButtonModule } from 'primeng/button';
-import { NotFoundComponent } from './not-found-page/not-found-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { ResizeObserverDirective } from './about-component/resize-observer.directive';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+
+// Components
+import { AppComponent } from './app.component';
+import { AboutComponent } from './about-component/about.component';
+import { MenuComponent } from './menu/menu.component';
+import { NotFoundComponent } from './not-found-page/not-found-page.component';
 
 // Service
 import { TedTalkService } from './shared/service/tedTalk.service';
@@ -28,10 +31,10 @@ import { TedTalkMockService } from './shared/service/mock/tedTalk-mock.service';
 
 @NgModule({
   declarations: [
+    MenuComponent,
     AppComponent,
     AboutComponent,
     NotFoundComponent,
-    ResizeObserverDirective
   ],
   imports: [
     BrowserModule,
@@ -42,13 +45,14 @@ import { TedTalkMockService } from './shared/service/mock/tedTalk-mock.service';
     NoopAnimationsModule,
     HttpClientModule,
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    BreadcrumbModule
   ],
   providers: [
     HttpClient,
     { provide: BooksService, useClass: BooksMockService },
     { provide: TVSeriesService, useClass: TVSeriesMockService },
-    { provide: MovieService, useClass: MovieMockService },
+    // { provide: MovieService, useClass: MovieMockService },
     { provide: TedTalkService, useClass: TedTalkMockService }
   ],
   bootstrap: [AppComponent]

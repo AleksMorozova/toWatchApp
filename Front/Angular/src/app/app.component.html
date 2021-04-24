@@ -4,7 +4,12 @@
     {{ title }}
   </h1>
 </div>
-
-<p-tabMenu [model]="items"></p-tabMenu>
+<div style="text-align:left">
+  <div class="content-section implementation">
+    <div class="card">
+        <p-breadcrumb [home]="home"></p-breadcrumb>
+    </div>
+</div>
+</div>
 
 <router-outlet></router-outlet>

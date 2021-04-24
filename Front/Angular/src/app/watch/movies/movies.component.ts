@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Movie } from '../../shared/model/Movie.model';
-import { MovieService } from './../../shared/service/movie.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MovieMockService } from './../../../app/shared/service/mock/movie-mock.service';
 
 @Component({
   selector: 'app-movies',
@@ -12,7 +12,7 @@ export class MoviesComponent {
 
   constructor(private router: Router,
                 private route: ActivatedRoute,
-    private movieService: MovieService) {
+    private movieService: MovieMockService) {
   }
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class MoviesComponent {
   }
 
   public reWatchMovie(movie: Movie): void {
-    this.movieService.reWatchMovie(movie);
+    // this.movieService.reWatchMovie(movie);
   }
 
   public addToFavorite(movie: Movie): void {

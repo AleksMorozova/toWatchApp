@@ -1,7 +1,9 @@
 import { Movie } from './../../model/Movie.model';
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+  })
 export class MovieMockService {
 
     public loadMovies(): Promise<Movie[]> {
