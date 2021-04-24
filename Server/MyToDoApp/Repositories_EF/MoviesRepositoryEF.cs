@@ -1,44 +1,45 @@
 ﻿using EF;
 using MyToDoApp.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using MyToDoApp.Converters;
+using AutoMapper;
+
 namespace MyToDoApp.Repositories
 {
     public class MoviesRepositoryEF: IMoviesRepository
     {
-        ApplicationContext context;
+        private readonly ApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public MoviesRepositoryEF(ApplicationContext context)
+        public MoviesRepositoryEF(ApplicationContext context, IMapper mapper)
         {
-            this.context = context;
+            _context = context;
+            _mapper = mapper;
         }
         public List<Movie> getMoviesToWatch()
         {
-            List<Model.Movie> movies = new List<Model.Movie>();
-            foreach (EF.Model.Movie movie in context.Movies) // .Where(m => m.isWatched == false))
+            List<Movie> movies = new List<Movie>();
+            foreach (EF.Model.Movie movie in _context.Movies.Where(m => m.IsWatched == false))
             {
-                movies.Add(MovieConverter.convertFromDTO(movie));
-                // context.Database.
+                movies.Add(_mapper.Map<Movie>(movie));
             }
+
             return movies;
         }
         public void update(Movie movie)
         {
-            var m = context.Movies.Where(m => movie.ID == m.ID).First();
+            var m = _context.Movies.Where(m => movie.ID == m.ID).First();
             m.IsWatched = movie.IsWatched;
             m.Link = movie.Link;
             m.Title = movie.Title;
             m.Description = movie.Description;
-            context.SaveChanges();
+            _context.SaveChanges();
         }
         public void add(Movie movie)
         {
-            using (var c = context)
+            using (var c = _context)
             {
-                c.Movies.Add(Converters.MovieConverter.convertToDTO(movie));
+                c.Movies.Add(_mapper.Map<EF.Model.Movie>(movie));
                 c.SaveChanges();
             }
         }
@@ -46,13 +47,13 @@ namespace MyToDoApp.Repositories
         public void bulkUpdate(List<Movie> movies)
         {
             foreach (Movie movie in movies) {
-                var m = context.Movies.Where(m => movie.ID == m.ID).First();
+                var m = _context.Movies.Where(m => movie.ID == m.ID).First();
                 m.IsWatched = movie.IsWatched;
                 m.Link = movie.Link;
                 m.Title = movie.Title;
                 m.Description = movie.Description;
             }
-            context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

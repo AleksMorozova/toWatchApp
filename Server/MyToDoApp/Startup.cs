@@ -9,6 +9,7 @@ using EF;
 using MyToDoApp.Repositories;
 using MyToDoApp.Repositories_EF;
 using MyToDoApp.Repositories_Dapper;
+using Microsoft.OpenApi.Models;
 
 namespace MyToDoApp
 {
@@ -25,6 +26,15 @@ namespace MyToDoApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAutoMapper(typeof(Startup));
+
+            services.AddSwaggerGen(c =>
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "My API",
+                Version = "v1"
+            }));
 
             // Services
             services.AddScoped<IMoviesService, MoviesService>();
@@ -57,6 +67,10 @@ namespace MyToDoApp
 
             app.UseRouting();
 
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
+
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -64,12 +78,27 @@ namespace MyToDoApp
             {
                 endpoints.MapControllers();
             });
-             
+
             app.UseEndpoints(endpoints =>
             {
-                /*endpoints.MapControllerRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=all}");*/
+                    pattern: "{controller=Home}/{action=all}");
+            });
+            app.UseDeveloperExceptionPage();
+            SwaggerConfig(app);
+        }
+
+        private void SwaggerConfig(IApplicationBuilder app)
+        {
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c => {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+                // c.InjectStylesheet("/StyleSheet1.css");
             });
         }
     }

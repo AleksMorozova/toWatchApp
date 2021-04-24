@@ -23,7 +23,7 @@ namespace MyToDoApp.Service
 
         public void addSeries(TVSeries tvSeries)
         {
-            tvSeriesRepository.add(tvSeries);
+            tvSeriesRepository.addSeries(tvSeries);
         }
 
         public void bulkUpdate(List<TVSeries> tvSerials)
@@ -32,19 +32,19 @@ namespace MyToDoApp.Service
         }
 
         public List<TVSeries> getAllSeries() {
-            return tvSeriesRepository.getAll();
+            return tvSeriesRepository.getAllSeries();
         }
 
         public void reWatchTVSeries(TVSeries tvSeries)
         {
             tvSeries.IsWatched = false;
-            tvSeriesRepository.update(tvSeries);
+            tvSeriesRepository.updateTVSeries(tvSeries);
         }
 
         public void watchTVSeries(TVSeries tvSeries)
         {
             tvSeries.IsWatched = true;
-            tvSeriesRepository.update(tvSeries);
+            tvSeriesRepository.updateTVSeries(tvSeries);
         }
     }
 }

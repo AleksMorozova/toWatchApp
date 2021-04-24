@@ -1,9 +1,6 @@
 ﻿using MyToDoApp.Model;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MyToDoApp.Converters;
+
 namespace MyToDoApp.Repositories
 {
     public interface IMoviesRepository

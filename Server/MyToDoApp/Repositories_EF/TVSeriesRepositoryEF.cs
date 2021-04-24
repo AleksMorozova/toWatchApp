@@ -1,48 +1,47 @@
-﻿using EF;
-using EF.Model;
-using MyToDoApp.Converters;
+﻿using AutoMapper;
+using EF;
+using MyToDoApp.Model;
 using MyToDoApp.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyToDoApp.Repositories_EF
 {
     public class TVSeriesRepositoryEF: ITVSeriesRepository
     {
-        ApplicationContext context;
-
-        public TVSeriesRepositoryEF(ApplicationContext context)
+        private readonly ApplicationContext _context;
+        private readonly IMapper _mapper;
+        public TVSeriesRepositoryEF(ApplicationContext context, IMapper mapper)
         {
-            this.context = context;
+            _context = context;
+            _mapper = mapper;
         }
-
-        public List<Model.TVSeries> getAll()
+        public void addSeries(Model.TVSeries series)
         {
-            List<Model.TVSeries> series = new List<Model.TVSeries>();
-            foreach (EF.Model.TVSeries serial in context.TVSerials)
+            using (var c = _context)
             {
-                series.Add(TVSeriesConverter.convertFromDTO(serial));
-            }
-            return series;
-        }
-
-        public void add(Model.TVSeries tvSeries)
-        {
-            using (var c = context)
-            {
-                c.TVSerials.Add(TVSeriesConverter.convertToDTO(tvSeries));
+                c.TVSerials.Add(_mapper.Map<EF.Model.TVSeries>(series));
                 c.SaveChanges();
             }
         }
 
-        public void update(Model.TVSeries tvSeries)
+
+        public void updateTVSeries(Model.TVSeries tvSeries)
         {
             throw new NotImplementedException();
         }
 
-        public void bulkUpdate(List<Model.TVSeries> tvSeries)
+        public List<Model.TVSeries> getAllSeries()
+        {
+            List<Model.TVSeries> series = new List<Model.TVSeries>();
+            foreach (EF.Model.TVSeries serial in _context.TVSerials)
+            {
+                series.Add(_mapper.Map<Model.TVSeries>(serial));
+            }
+            return series;
+        }
+
+        public void bulkUpdate(List<TVSeries> tvSeries)
         {
             throw new NotImplementedException();
         }

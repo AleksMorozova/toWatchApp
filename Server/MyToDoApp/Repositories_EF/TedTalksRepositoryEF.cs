@@ -1,47 +1,62 @@
-﻿using EF;
-using MyToDoApp.Converters;
+﻿using AutoMapper;
+using EF;
 using MyToDoApp.Model;
 using MyToDoApp.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyToDoApp.Repositories_EF
 {
     public class TedTalksRepositoryEF : ITedTalksRepository
     {
-        ApplicationContext context;
+        private readonly ApplicationContext _context;
+        private readonly IMapper _mapper;
 
-        public TedTalksRepositoryEF(ApplicationContext context)
+        public TedTalksRepositoryEF(ApplicationContext context, IMapper mapper)
         {
-            this.context = context;
+            _context = context;
+            _mapper = mapper;
+        }
+        public void add(TEDTalk tedTalk)
+        {
+            using (var c = _context)
+            {
+                c.TEDTalks.Add(_mapper.Map<EF.Model.TEDTalk>(tedTalk));
+                c.SaveChanges();
+            }
         }
 
-        public void add(TEDTalk tvSeries)
+        public void bulkUpdate(List<TEDTalk> talks)
         {
-            throw new NotImplementedException();
-        }
-
-        public void bulkUpdate(List<TEDTalk> tvSeries)
-        {
-            throw new NotImplementedException();
+            foreach (TEDTalk talk in talks)
+            {
+                var t = _context.TEDTalks.Where(m => talk.ID == m.ID).First();
+                t.IsWatched = talk.IsWatched;
+                t.Link = talk.Link;
+                t.Title = talk.Title;
+            }
+            _context.SaveChanges();
         }
 
         public List<TEDTalk> getAll()
         {
             List<TEDTalk> talks = new List<TEDTalk>();
-            foreach (EF.Model.TEDTalk talk in context.TEDTalks)
+            foreach (EF.Model.TEDTalk talk in _context.TEDTalks)
             {
-                talks.Add(TedTalkConverter.convertFromDTO(talk));
+                talks.Add(_mapper.Map<TEDTalk>(talk));
             }
 
             return talks;
         }
 
-        public void update(TEDTalk tvSeries)
+        public void update(TEDTalk talk)
         {
-            throw new NotImplementedException();
+            var t = _context.TEDTalks.Where(m => talk.ID == m.ID).First();
+            t.IsWatched = talk.IsWatched;
+            t.Link = talk.Link;
+            t.Title = talk.Title;
+            _context.SaveChanges();
         }
     }
 }
