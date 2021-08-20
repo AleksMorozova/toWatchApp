@@ -1,4 +1,5 @@
-﻿using MyToDoApp.Model;
+﻿using AutoMapper;
+using MyToDoApp.Model;
 using MyToDoApp.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,46 +10,53 @@ namespace MyToDoApp.Service
 {
     public interface IMoviesService
     {
-        List<Movie> getMoviesToWatch();
-        void watchMovie(Movie movie);
-        void reWatchMovie(Movie movie);
-        void addMovie(Movie movie);
-        void bulkUpdate(List<Movie> movie);
+        List<Movie> GetMoviesToWatch();
+        Task<Movie> AddMovieAsync(Movie movie);
+        Movie WatchMovie(Movie movie);
+        Movie ReWatchMovie(Movie movie);
+        void BulkUpdate(List<Movie> movie);
     }
 
     public class MoviesService: IMoviesService
     {
+        private readonly IMoviesRepository _moviesRepository;
+        private readonly IMapper _mapper;
 
-        private IMoviesRepository moviesRepository;
-        public MoviesService(IMoviesRepository moviesRepository)
+        public MoviesService(IMoviesRepository moviesRepository, IMapper mapper)
         {
-            this.moviesRepository = moviesRepository;
+            _moviesRepository = moviesRepository;
+            _mapper = mapper;
         }
-
-        public void addMovie(Movie movie)
+        public List<Movie> GetMoviesToWatch()
         {
-            this.moviesRepository.add(movie);
-        }
+            List<Movie> movies = new List<Movie>();
+            foreach (EF.Model.Movie movie in _moviesRepository.GetAll())
+            {
+                movies.Add(_mapper.Map<Movie>(movie));
+            }
 
-        public void bulkUpdate(List<Movie> movies)
+            return movies;
+        }
+        public async Task<Movie> AddMovieAsync(Movie movie)
         {
-            moviesRepository.bulkUpdate(movies);
+            EF.Model.Movie newMovie = await _moviesRepository.AddAsync(_mapper.Map<EF.Model.Movie>(movie));
+            return _mapper.Map<Movie>(newMovie);
         }
-
-        public List<Movie> getMoviesToWatch()
-        {
-            return this.moviesRepository.getMoviesToWatch();
-        }
-
-        public void reWatchMovie(Movie movie)
+        public Movie ReWatchMovie(Movie movie)
         {
             movie.IsWatched = false;
-            this.moviesRepository.update(movie);
+            EF.Model.Movie newMovie = _mapper.Map<EF.Model.Movie>(movie);
+            return _mapper.Map<Movie>(_moviesRepository.Update(newMovie));
         }
-
-        public void watchMovie(Movie movie) {
+        public Movie WatchMovie(Movie movie)
+        {
             movie.IsWatched = true;
-            this.moviesRepository.update(movie);
+            EF.Model.Movie newMovie = _mapper.Map<EF.Model.Movie>(movie);
+            return _mapper.Map<Movie>(_moviesRepository.Update(newMovie));
+        }
+        public void BulkUpdate(List<Movie> movies)
+        {
+            // moviesRepository.BulkUpdate(movies);
         }
     }
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
 using MyToDoApp.Service;
@@ -13,46 +10,44 @@ namespace MyToDoApp.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        private IMoviesService moviesService;
+        private IMoviesService _moviesService;
         public MoviesController(IMoviesService moviesService)
         {
-            this.moviesService = moviesService;
+            _moviesService = moviesService;
         }
 
-        [HttpGet("toWatch")]
-        public async Task<IActionResult> GetMoviesToWatch()
+        [HttpGet("all")]
+        public IActionResult GetMoviesToWatch()
         {
-            return Ok(moviesService.getMoviesToWatch());
+            return Ok(_moviesService.GetMoviesToWatch());
         }
 
-        [HttpPost("bulkUpdate")]
-        public async Task<IActionResult> UpdateAll([FromBody] List<Movie> movies)
+        [HttpPost("add")]
+        public async Task<IActionResult> AddMovie(Movie movie)
         {
-            moviesService.bulkUpdate(movies);
-            return Ok(movies);
+            await _moviesService.AddMovieAsync(movie);
+            return Ok(movie);
         }
 
         [HttpPost("watch")]
-        public async Task<IActionResult> WatchMovie([FromBody] Movie movie)
+        public IActionResult WatchMovie(Movie movie)
         {
-            moviesService.watchMovie(movie);
+            _moviesService.WatchMovie(movie);
             return Ok(movie);
         }
-
 
         [HttpPost("reWatch")]
-        public async Task<IActionResult> ReWatchMovie([FromBody] Movie movie)
+        public IActionResult ReWatchMovie(Movie movie)
         {
-            moviesService.reWatchMovie(movie);
+            _moviesService.ReWatchMovie(movie);
             return Ok(movie);
         }
 
-
-        [HttpPost("add")]
-        public async Task<IActionResult> AddMovie([FromBody] Movie movie)
+        [HttpPost("bulkUpdate")]
+        public IActionResult UpdateAll(List<Movie> movies)
         {
-            moviesService.addMovie(movie);
-            return Ok(movie);
+            _moviesService.BulkUpdate(movies);
+            return Ok(movies);
         }
     }
 }

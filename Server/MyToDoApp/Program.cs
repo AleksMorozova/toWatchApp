@@ -27,17 +27,17 @@ namespace MyToDoApp
                 {
                     webBuilder.UseStartup<Startup>();
                     webBuilder.UseUrls("http://localhost:4200/");
+                    // change path to static files, in thise case to index.html
+                    // webBuilder.UseWebRoot("static");
                 });
         private static void CreateDbIfNotExists(IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-
                 try
                 {
                     var context = services.GetRequiredService<ApplicationContext>();
-                    context.Database.EnsureDeleted();
                     context.Database.EnsureCreated();
                     DbInitializer.Initialize(context);
                 }

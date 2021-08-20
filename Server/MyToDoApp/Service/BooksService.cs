@@ -1,45 +1,52 @@
-﻿using MyToDoApp.Model;
-using MyToDoApp.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using MyToDoApp.Model;
+using MyToDoApp.Repositories;
 
 namespace MyToDoApp.Service
 {
     public interface IBooksService {
-        public List<Book> getAllBooks();
-        public void readBook(Book book);
-        public void bulkUpdate(List<Book> book);
-        public void addBook(Book book);
-
+        public List<Book> GetBooksToRead();
+        public Task<Book> AddBookAsync(Book book);
+        public Book ReadBook(Book book);
+        public void BulkUpdate(List<Book> book);
     }
+
     public class BooksService: IBooksService
     {
-        IBooksRepository booksRepository;
-        public BooksService(IBooksRepository booksRepository)
+        private readonly IBooksRepository _booksRepository;
+        private readonly IMapper _mapper;
+
+        public BooksService(IBooksRepository booksRepository, IMapper mapper)
         {
-            this.booksRepository = booksRepository;
+            _booksRepository = booksRepository;
+            _mapper = mapper;
         }
-
-        public void addBook(Book book)
+        public List<Book> GetBooksToRead()
         {
-            booksRepository.addBook(book);
+            List<Book> books = new List<Book>();
+            foreach (EF.Model.Book book in _booksRepository.GetAll())
+            {
+                books.Add(_mapper.Map<Book>(book));
+            }
+            return books;
         }
-
-        public void bulkUpdate(List<Book> book)
+        public async Task<Book> AddBookAsync(Book book)
         {
-            throw new NotImplementedException();
+            EF.Model.Book newBook = await _booksRepository.AddAsync(_mapper.Map<EF.Model.Book>(book));
+            return _mapper.Map<Book>(newBook);
         }
-
-        public List<Book> getAllBooks() {
-            return this.booksRepository.getAllBooks();
-        }
-
-        public void readBook(Book book)
+        public Book ReadBook(Book book)
         {
             book.IsReaded = true;
-            booksRepository.updateBook(book);
+            EF.Model.Book newBook = _mapper.Map<EF.Model.Book>(book);
+            return _mapper.Map<Book>(_booksRepository.Update(newBook));
+        }
+        public void BulkUpdate(List<Book> book)
+        {
+            throw new NotImplementedException();
         }
     }
 }

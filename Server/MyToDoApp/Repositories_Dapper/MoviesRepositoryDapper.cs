@@ -10,63 +10,65 @@ using System.Threading.Tasks;
 
 namespace MyToDoApp.Repositories_Dapper
 {
-    public class MoviesRepositoryDapper : IMoviesRepository
+    public class MoviesRepositoryDapper : RepositoryDapper<EF.Model.Movie>, IMoviesRepository
     {
-        public void add(Movie movie)
-        {
-            movie.ID = Guid.NewGuid();
-            using (var connection = new SqlConnection(@"Server=.\SQLEXPRESS;Database=ToDoDB1;Trusted_Connection=True;"))
-            {
-                connection.Execute(MovieQueries.insertQuery, new
-                {
-                    movie.Title,
-                    movie.Description,
-                    movie.Link,
-                    movie.IsWatched,
-                    movie.ID
-                });
-            }
-    }
+        //public void BulkUpdate(List<Movie> movies)
+        //{
+        //    using (var connection = new SqlConnection(@"Server=.\SQLEXPRESS;Database=ToDoDB1;Trusted_Connection=True;"))
+        //    {
+        //        foreach (Movie movie in movies)
+        //        {
+        //            connection.Execute(MovieQueries.updateQuery, new
+        //            {
+        //                movie.Title,
+        //                movie.Description,
+        //                movie.Link,
+        //                movie.IsWatched,
+        //                movie.ID
+        //            });
+        //        }
+        //    }
+        //}
 
-        public void bulkUpdate(List<Movie> movies)
+        //public List<Movie> GetAll()
+        //{
+        //    return QueryAll();
+        //}
+
+        ////public void Update(Movie movie)
+        ////{
+        ////    using (var connection = new SqlConnection(@"Server =.\SQLEXPRESS;Database=ToDoDB1;Trusted_Connection=True;"))
+        ////    {
+        ////        connection.Execute(MovieQueries.updateQuery, new
+        ////        {
+        ////            movie.Title,
+        ////            movie.Description,
+        ////            movie.Link,
+        ////            movie.IsWatched,
+        ////            movie.ID
+        ////        });
+        ////    }
+        ////}
+
+        public override string InsertQuery
         {
-            using (var connection = new SqlConnection(@"Server=.\SQLEXPRESS;Database=ToDoDB1;Trusted_Connection=True;"))
+            get
             {
-                foreach (Movie movie in movies)
-                {
-                    connection.Execute(MovieQueries.updateQuery, new
-                    {
-                        movie.Title,
-                        movie.Description,
-                        movie.Link,
-                        movie.IsWatched,
-                        movie.ID
-                    });
-                }
+                return MovieQueries.insertQuery;
             }
         }
 
-        public List<Movie> getMoviesToWatch()
+        public override string ReadQuery
         {
-            using (var connection = new SqlConnection(@"Server=.\SQLEXPRESS;Database=ToDoDB1;Trusted_Connection=True;"))
+            get
             {
-                return connection.Query<Movie>(MovieQueries.getAll).ToList();
+                return MovieQueries.getAll;
             }
         }
 
-        public void update(Movie movie)
+        public void BulkUpdate(List<EF.Model.Movie> movies)
         {
-            using (var connection = new SqlConnection(@"Server =.\SQLEXPRESS;Database=ToDoDB1;Trusted_Connection=True;"))
-            {
-                connection.Execute(MovieQueries.updateQuery, new
-                {
-                    movie.Title,
-                    movie.Description,
-                    movie.Link,
-                    movie.IsWatched,
-                    movie.ID
-                });
-            }
+            throw new NotImplementedException();
         }
     }
 }

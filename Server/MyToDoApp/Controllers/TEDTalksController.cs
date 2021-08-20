@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
 using MyToDoApp.Service;
@@ -13,32 +10,34 @@ namespace MyToDoApp.Controllers
     [ApiController]
     public class TEDTalksController : ControllerBase
     {
-        private ITedTalksService tedTalksService;
+        private ITedTalksService _tedTalksService;
         public TEDTalksController(ITedTalksService tedTalksService)
         {
-            this.tedTalksService = tedTalksService;
+            _tedTalksService = tedTalksService;
         }
 
-        [HttpGet("toWatch")]
-        public IActionResult getToWatch()
+        [HttpGet("all")]
+        public IActionResult getTalksToWatch()
         {
-            return Ok(tedTalksService.getAllTEDTalks());
-        }
-
-        [HttpPost("bulkUpdate")]
-        public async Task<IActionResult> BulkUpdate([FromBody] List<TEDTalk> talks)
-        {
-            return Ok();
-        }
-
-        [HttpPost("update")]
-        public async Task<IActionResult> Update([FromBody] TEDTalk talk)
-        {
-            return Ok();
+            return Ok(_tedTalksService.GetTEDTalksToWatch());
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> Add([FromBody] TEDTalk talk)
+        public async Task<IActionResult> Add(TEDTalk talk)
+        {
+            await _tedTalksService.AddTEDTalk(talk);
+            return Ok(talk);
+        }
+
+        [HttpPost("watch")]
+        public IActionResult Update(TEDTalk talk)
+        {
+            _tedTalksService.WatchTEDTalk(talk);
+            return Ok();
+        }
+
+        [HttpPost("bulkUpdate")]
+        public IActionResult BulkUpdate(List<TEDTalk> talks)
         {
             return Ok();
         }

@@ -1,50 +1,58 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using MyToDoApp.Model;
 using MyToDoApp.Repositories;
 
 namespace MyToDoApp.Service
 {
     public interface ITVSeriesService {
-        List<TVSeries> getAllSeries();
-        void addSeries(TVSeries tvSeries);
-        void watchTVSeries(TVSeries tvSeries);
-        void reWatchTVSeries(TVSeries tvSeries);
-
-        void bulkUpdate(List<TVSeries> tvSeries);
+        List<TVSeries> GetSeriesToWatch();
+        Task<TVSeries> AddSeries(TVSeries tvSeries);
+        TVSeries WatchTVSeries(TVSeries tvSeries);
+        TVSeries ReWatchTVSeries(TVSeries tvSeries);
+        void BulkUpdate(List<TVSeries> tvSeries);
     }
     public class TVSeriesService: ITVSeriesService
     {
-        private ITVSeriesRepository tvSeriesRepository;
-
-        public TVSeriesService(ITVSeriesRepository tvSeriesRepository)
+        private readonly ITVSeriesRepository _tvSeriesRepository;
+        private readonly IMapper _mapper;
+        public TVSeriesService(ITVSeriesRepository tvSeriesRepository, IMapper mapper)
         {
-            this.tvSeriesRepository = tvSeriesRepository;
-        }
+            _tvSeriesRepository = tvSeriesRepository;
+            _mapper = mapper;
 
-        public void addSeries(TVSeries tvSeries)
+        }
+        public List<TVSeries> GetSeriesToWatch()
         {
-            tvSeriesRepository.addSeries(tvSeries);
-        }
+            List<TVSeries> listOfSeries = new List<TVSeries>();
+            foreach (EF.Model.TVSeries series in _tvSeriesRepository.GetAll())
+            {
+                listOfSeries.Add(_mapper.Map<TVSeries>(series));
+            }
 
-        public void bulkUpdate(List<TVSeries> tvSerials)
+            return listOfSeries;
+        }
+        public async Task<TVSeries> AddSeries(TVSeries tvSeries)
         {
-            tvSeriesRepository.bulkUpdate(tvSerials);
+            EF.Model.TVSeries newTVSeries = await _tvSeriesRepository.AddAsync(_mapper.Map<EF.Model.TVSeries>(tvSeries));
+            return _mapper.Map<TVSeries>(newTVSeries);
         }
-
-        public List<TVSeries> getAllSeries() {
-            return tvSeriesRepository.getAllSeries();
-        }
-
-        public void reWatchTVSeries(TVSeries tvSeries)
+        public TVSeries ReWatchTVSeries(TVSeries tvSeries)
         {
             tvSeries.IsWatched = false;
-            tvSeriesRepository.updateTVSeries(tvSeries);
+            EF.Model.TVSeries newTVSeries = _mapper.Map<EF.Model.TVSeries>(tvSeries);
+            return _mapper.Map<TVSeries>(_tvSeriesRepository.Update(newTVSeries));
         }
-
-        public void watchTVSeries(TVSeries tvSeries)
+        public TVSeries WatchTVSeries(TVSeries tvSeries)
         {
             tvSeries.IsWatched = true;
-            tvSeriesRepository.updateTVSeries(tvSeries);
+            EF.Model.TVSeries newTVSeries = _mapper.Map<EF.Model.TVSeries>(tvSeries);
+            return _mapper.Map<TVSeries>(_tvSeriesRepository.Update(newTVSeries));
+        }
+        public void BulkUpdate(List<TVSeries> tvSerials)
+        {
+            // tvSeriesRepository.BulkUpdate(tvSerials);
         }
     }
 }

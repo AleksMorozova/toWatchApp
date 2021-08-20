@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
@@ -7,49 +6,48 @@ using MyToDoApp.Service;
 
 namespace MyToDoApp.Controllers
 {
-    [ApiController]
     [Route("[controller]")]
+    [ApiController]
     public class TVSeriesController : ControllerBase
     {
-        private ITVSeriesService tvSeriesService;
+        private ITVSeriesService _tvSeriesService;
         public TVSeriesController(ITVSeriesService tvSeriesService)
         {
-            this.tvSeriesService = tvSeriesService;
+            _tvSeriesService = tvSeriesService;
         }
 
-        [HttpGet("toWatch")]
-        public async Task<IActionResult> GetSeriesToWatch()
+        [HttpGet("all")]
+        public IActionResult GetSeriesToWatch()
         {
-            return Ok(tvSeriesService.getAllSeries());
+            return Ok(_tvSeriesService.GetSeriesToWatch());
         }
 
-
-        [HttpPost("bulkUpdate")]
-        public async Task<IActionResult> UpdateAll([FromBody] List<TVSeries> serials)
+        [HttpPost("add")]
+        public async Task<IActionResult> AddTVSeries(TVSeries tvSeries)
         {
-            tvSeriesService.bulkUpdate(serials);
-            return Ok(serials);
+            await _tvSeriesService.AddSeries(tvSeries);
+            return Ok(tvSeries);
         }
 
         [HttpPost("watch")]
-        public async Task<IActionResult> WatchTvSeries([FromBody] TVSeries tvSeries)
+        public IActionResult WatchTvSeries(TVSeries tvSeries)
         {
-            tvSeriesService.watchTVSeries(tvSeries);
+            _tvSeriesService.WatchTVSeries(tvSeries);
             return Ok(tvSeries);
         }
 
         [HttpPost("reWatch")]
-        public async Task<IActionResult> ReWatchTvSeries([FromBody] TVSeries tvSeries)
+        public IActionResult ReWatchTvSeries(TVSeries tvSeries)
         {
-            tvSeriesService.reWatchTVSeries(tvSeries);
+            _tvSeriesService.ReWatchTVSeries(tvSeries);
             return Ok(tvSeries);
         }
 
-        [HttpPost("add")]
-        public async Task<IActionResult> AddTVSeries([FromBody] TVSeries tvSeries)
+        [HttpPost("bulkUpdate")]
+        public IActionResult UpdateAll(List<TVSeries> serials)
         {
-            tvSeriesService.addSeries(tvSeries);
-            return Ok(tvSeries);
+            _tvSeriesService.BulkUpdate(serials);
+            return Ok(serials);
         }
     }
 }

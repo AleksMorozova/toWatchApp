@@ -10,6 +10,10 @@ using MyToDoApp.Repositories;
 using MyToDoApp.Repositories_EF;
 using MyToDoApp.Repositories_Dapper;
 using Microsoft.OpenApi.Models;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.FileProviders;
+using MyToDoApp.Config;
 
 namespace MyToDoApp
 {
@@ -25,6 +29,8 @@ namespace MyToDoApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigurePOCO<TestOptions>(Configuration.GetSection("TestOptions"), new TestOptions());
+
             services.AddControllers();
 
             services.AddAutoMapper(typeof(Startup));
@@ -69,7 +75,18 @@ namespace MyToDoApp
 
             app.UseDefaultFiles();
 
-            app.UseStaticFiles();
+            // app.UseStaticFiles();
+
+            const string cacheMaxAge = "7";
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    // using Microsoft.AspNetCore.Http;
+                    ctx.Context.Response.Headers.Append(
+                         "Cache-Control", $"public, max-age={cacheMaxAge}");
+                }
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();

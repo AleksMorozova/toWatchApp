@@ -1,13 +1,13 @@
-﻿using MyToDoApp.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MyToDoApp.Repositories
 {
     public interface IMoviesRepository
     {
-        public List<Movie> getMoviesToWatch();
-        public void update(Movie movie);
-        public void add(Movie movie);
-        public void bulkUpdate(List<Movie> movies);
+        public List<EF.Model.Movie> GetAll();
+        public EF.Model.Movie Update(EF.Model.Movie movie);
+        public Task<EF.Model.Movie> AddAsync(EF.Model.Movie movie);
+        public void BulkUpdate(List<EF.Model.Movie> movies);
     }
 }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyToDoApp.Config;
 using MyToDoApp.Model;
 using MyToDoApp.Service;
 
@@ -13,40 +11,38 @@ namespace MyToDoApp.Controllers
     [ApiController]
     public class BooksController : ControllerBase
     {
-        private IBooksService booksService;
-        public BooksController(IBooksService booksService)
+        private IBooksService _booksService;
+        private TestOptions testOptions;
+
+        public BooksController(IBooksService booksService, TestOptions testOptions)
         {
-            this.booksService = booksService;
+            this.testOptions = testOptions;
+            _booksService = booksService;
         }
 
-        [HttpGet("read")]
-        public Book Index(int id)
+        [HttpGet("all")]
+        public IActionResult GetBooksToRead()
         {
-            return this.booksService.getAllBooks().ElementAt(0);
-        }
-
-        [HttpGet("toRead")]
-        public IEnumerable<Book> GetToRead()
-        {
-            return booksService.getAllBooks();
-        }
-
-        [HttpPost("bulkUpdate")]
-        public void UpdateAll([FromBody] List<Book> books)
-        {
-            this.booksService.bulkUpdate(books);
-        }
-
-        [HttpPost("update")]
-        public void ReadBook([FromBody] Book book)
-        {
-            this.booksService.readBook(book);
+            return Ok(_booksService.GetBooksToRead());
         }
 
         [HttpPost("add")]
-        public void AddBook([FromBody] Book book)
+        public async Task<IActionResult> AddBook(Book book)
         {
-            this.booksService.addBook(book);
+            await _booksService.AddBookAsync(book);
+            return Ok(book);
+        }
+
+        [HttpPost("read")]
+        public void ReadBook(Book book)
+        {
+            _booksService.ReadBook(book);
+        }
+
+        [HttpPost("bulkUpdate")]
+        public void UpdateAll(List<Book> books)
+        {
+            _booksService.BulkUpdate(books);
         }
     }
 }

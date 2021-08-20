@@ -1,4 +1,5 @@
-﻿using MyToDoApp.Model;
+﻿using AutoMapper;
+using MyToDoApp.Model;
 using MyToDoApp.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,36 +10,44 @@ namespace MyToDoApp.Service
 {
     public interface ITedTalksService
     {
-        public List<TEDTalk> getAllTEDTalks();
-        public void watchTEDTalk(TEDTalk talk);
-        public void bulkUpdate(List<TEDTalk> talk);
-        public void addTEDTalk(TEDTalk talk);
-
+        public List<TEDTalk> GetTEDTalksToWatch();
+        public Task<TEDTalk> AddTEDTalk(TEDTalk talk);
+        public TEDTalk WatchTEDTalk(TEDTalk talk);
+        public void BulkUpdate(List<TEDTalk> talk);
     }
+
     public class TedTalksService : ITedTalksService
     {
-        ITedTalksRepository tedTalksRepository;
-        public TedTalksService(ITedTalksRepository tedTalksRepository)
-        {
-            this.tedTalksRepository = tedTalksRepository;
-        }
+        private readonly ITedTalksRepository _tedTalksRepository;
+        private readonly IMapper _mapper;
 
-        public void addTEDTalk(TEDTalk talk)
+        public TedTalksService(ITedTalksRepository tedTalksRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _tedTalksRepository = tedTalksRepository;
+            _mapper = mapper;
         }
-
-        public void bulkUpdate(List<TEDTalk> talk)
+        public List<TEDTalk> GetTEDTalksToWatch()
         {
-            throw new NotImplementedException();
-        }
+            List<TEDTalk> talks = new List<TEDTalk>();
+            foreach (EF.Model.TEDTalk talk in _tedTalksRepository.GetAll())
+            {
+                talks.Add(_mapper.Map<TEDTalk>(talk));
+            }
 
-        public List<TEDTalk> getAllTEDTalks()
+            return talks;
+        }
+        public async Task<TEDTalk> AddTEDTalk(TEDTalk talk)
         {
-            return this.tedTalksRepository.getAll();
+            EF.Model.TEDTalk newTalk = await _tedTalksRepository.AddAsync(_mapper.Map<EF.Model.TEDTalk>(talk));
+            return _mapper.Map<TEDTalk>(newTalk);
         }
-
-        public void watchTEDTalk(TEDTalk talk)
+        public TEDTalk WatchTEDTalk(TEDTalk talk)
+        {
+            talk.IsWatched = false;
+            EF.Model.TEDTalk newTalk= _mapper.Map<EF.Model.TEDTalk>(talk);
+            return _mapper.Map<TEDTalk>(_tedTalksRepository.Update(newTalk));
+        }
+        public void BulkUpdate(List<TEDTalk> talk)
         {
             throw new NotImplementedException();
         }
