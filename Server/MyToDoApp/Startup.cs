@@ -1,18 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using MyToDoApp.Service;
-using EF;
-using MyToDoApp.Repositories;
-using MyToDoApp.Repositories_EF;
-using MyToDoApp.Repositories_Dapper;
-using Microsoft.OpenApi.Models;
-using System.IO;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.FileProviders;
 using MyToDoApp.Config;
 
 namespace MyToDoApp
@@ -29,37 +20,22 @@ namespace MyToDoApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.ConfigurePOCO<TestOptions>(Configuration.GetSection("TestOptions"), new TestOptions());
+            // services.ConfigurePOCO<TestOptions>(Configuration.GetSection("TestOptions"), new TestOptions());
 
             services.AddControllers();
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddSwaggerGen(c =>
-            c.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Title = "My API",
-                Version = "v1"
-            }));
+            services.AddSwaggerConfiguration();
 
-            // Services
-            services.AddScoped<IMoviesService, MoviesService>();
-            services.AddScoped<ITVSeriesService, TVSeriesService>();
-            services.AddScoped<IBooksService, BooksService>();
-            services.AddScoped<ITedTalksService, TedTalksService>();
-
-            // Repositories
-            services.AddScoped<IMoviesRepository, MoviesRepositoryDapper>();
-            services.AddScoped<ITVSeriesRepository, TVSeriesRepositoryEF>();
-            services.AddScoped<IBooksRepository, BooksRepositoryEF>();
-            services.AddScoped<ITedTalksRepository, TedTalksRepositoryEF>();
-
-            services.AddDbContext<ApplicationContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("ApplicationContext")));
+            services.AddServiceConfiguration();
+            
             services.AddCors();
 
-        }
+            // services.AddHostedService();
 
+            services.AddDBConfiguration(Configuration);
+        }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -74,6 +50,8 @@ namespace MyToDoApp
             app.UseRouting();
 
             app.UseDefaultFiles();
+
+            app.ConfigureExceptionHandler();
 
             // app.UseStaticFiles();
 
@@ -102,7 +80,9 @@ namespace MyToDoApp
                     name: "default",
                     pattern: "{controller=Home}/{action=all}");
             });
+
             app.UseDeveloperExceptionPage();
+
             SwaggerConfig(app);
         }
 

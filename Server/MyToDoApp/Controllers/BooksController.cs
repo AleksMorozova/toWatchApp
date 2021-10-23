@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MyToDoApp.Config;
 using MyToDoApp.Model;
-using MyToDoApp.Service;
+using MyToDoApp.Services.Contracts;
 
 namespace MyToDoApp.Controllers
 {
@@ -12,37 +11,34 @@ namespace MyToDoApp.Controllers
     public class BooksController : ControllerBase
     {
         private IBooksService _booksService;
-        private TestOptions testOptions;
 
-        public BooksController(IBooksService booksService, TestOptions testOptions)
+        public BooksController(IBooksService booksService)
         {
-            this.testOptions = testOptions;
             _booksService = booksService;
         }
 
-        [HttpGet("all")]
-        public IActionResult GetBooksToRead()
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBookById(Guid id)
         {
-            return Ok(_booksService.GetBooksToRead());
+            return Ok(await _booksService.GetById(id));
         }
 
-        [HttpPost("add")]
+        [HttpGet("all")]
+        public IActionResult GetBookToRead()
+        {
+            return Ok(_booksService.GetAll());
+        }
+
+        [HttpPost("")]
         public async Task<IActionResult> AddBook(Book book)
         {
-            await _booksService.AddBookAsync(book);
-            return Ok(book);
+            return Ok(await _booksService.Add(book));
         }
 
-        [HttpPost("read")]
-        public void ReadBook(Book book)
+        [HttpPost("read/{id}")]
+        public async Task<IActionResult> ReadBook(Guid id)
         {
-            _booksService.ReadBook(book);
-        }
-
-        [HttpPost("bulkUpdate")]
-        public void UpdateAll(List<Book> books)
-        {
-            _booksService.BulkUpdate(books);
+            return Ok(await _booksService.ReadBook(id));
         }
     }
 }

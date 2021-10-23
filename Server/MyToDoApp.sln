@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyToDoApp", "MyToDoApp\MyToDoApp.csproj", "{F4810E1C-BA5A-443D-93D7-F1315907F078}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF", "EF\EF.csproj", "{3964D268-0F5F-45E9-BA75-53A9A3F65D38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EF", "EF\EF.csproj", "{3964D268-0F5F-45E9-BA75-53A9A3F65D38}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject", "XUnitTestProject2\TestProject.csproj", "{0086D8D3-40C0-4CCD-9793-65B9BD54F618}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{3964D268-0F5F-45E9-BA75-53A9A3F65D38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3964D268-0F5F-45E9-BA75-53A9A3F65D38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3964D268-0F5F-45E9-BA75-53A9A3F65D38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0086D8D3-40C0-4CCD-9793-65B9BD54F618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0086D8D3-40C0-4CCD-9793-65B9BD54F618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0086D8D3-40C0-4CCD-9793-65B9BD54F618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0086D8D3-40C0-4CCD-9793-65B9BD54F618}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

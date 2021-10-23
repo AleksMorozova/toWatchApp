@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
-using MyToDoApp.Service;
+using MyToDoApp.Services.Contracts;
 
 namespace MyToDoApp.Controllers
 {
@@ -16,38 +16,35 @@ namespace MyToDoApp.Controllers
             _tvSeriesService = tvSeriesService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSeriesById(Guid id)
+        {
+            return Ok(await _tvSeriesService.GetById(id));
+        }
+
         [HttpGet("all")]
         public IActionResult GetSeriesToWatch()
         {
-            return Ok(_tvSeriesService.GetSeriesToWatch());
+            return Ok(_tvSeriesService.GetAll());
         }
 
-        [HttpPost("add")]
+        [HttpPost("")]
         public async Task<IActionResult> AddTVSeries(TVSeries tvSeries)
         {
-            await _tvSeriesService.AddSeries(tvSeries);
+            await _tvSeriesService.Add(tvSeries);
             return Ok(tvSeries);
         }
 
-        [HttpPost("watch")]
-        public IActionResult WatchTvSeries(TVSeries tvSeries)
+        [HttpPost("watch/{id}")]
+        public async Task<IActionResult> WatchTvSeries(Guid id)
         {
-            _tvSeriesService.WatchTVSeries(tvSeries);
-            return Ok(tvSeries);
+            return Ok(await _tvSeriesService.WatchTVSeries(id));
         }
 
-        [HttpPost("reWatch")]
-        public IActionResult ReWatchTvSeries(TVSeries tvSeries)
+        [HttpPost("reWatch/{id}")]
+        public async Task<IActionResult> ReWatchTvSeries(Guid id)
         {
-            _tvSeriesService.ReWatchTVSeries(tvSeries);
-            return Ok(tvSeries);
-        }
-
-        [HttpPost("bulkUpdate")]
-        public IActionResult UpdateAll(List<TVSeries> serials)
-        {
-            _tvSeriesService.BulkUpdate(serials);
-            return Ok(serials);
+            return Ok(await _tvSeriesService.ReWatchTVSeries(id));
         }
     }
 }

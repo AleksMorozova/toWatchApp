@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
-using MyToDoApp.Service;
+using MyToDoApp.Services.Contracts;
 
 namespace MyToDoApp.Controllers
 {
@@ -16,30 +16,29 @@ namespace MyToDoApp.Controllers
             _tedTalksService = tedTalksService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTalkById(Guid id)
+        {
+            return Ok(await _tedTalksService.GetById(id));
+        }
+
         [HttpGet("all")]
         public IActionResult getTalksToWatch()
         {
-            return Ok(_tedTalksService.GetTEDTalksToWatch());
+            return Ok(_tedTalksService.GetAll());
         }
 
-        [HttpPost("add")]
+        [HttpPost("")]
         public async Task<IActionResult> Add(TEDTalk talk)
         {
-            await _tedTalksService.AddTEDTalk(talk);
+            await _tedTalksService.Add(talk);
             return Ok(talk);
         }
 
-        [HttpPost("watch")]
-        public IActionResult Update(TEDTalk talk)
+        [HttpPost("watch/{id}")]
+        public async Task<IActionResult> WatchTEDTalk(Guid id)
         {
-            _tedTalksService.WatchTEDTalk(talk);
-            return Ok();
-        }
-
-        [HttpPost("bulkUpdate")]
-        public IActionResult BulkUpdate(List<TEDTalk> talks)
-        {
-            return Ok();
+            return Ok(await _tedTalksService.WatchTEDTalk(id));
         }
     }
 }

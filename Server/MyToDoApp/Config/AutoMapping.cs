@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
-using EF.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using MyToDoApp.DAL.Model;
 
 namespace MyToDoApp.Config
 {
@@ -11,17 +7,17 @@ namespace MyToDoApp.Config
     {
         public AutoMapping()
         {
-            CreateMap<Book, MyToDoApp.Model.Book>();
-            CreateMap<MyToDoApp.Model.Book, Book>();
+            CreateMap<Model.Book, DAL.Model.Book>();
+            CreateMap<DAL.Model.Book, Model.Book>();
 
-            CreateMap<Movie, MyToDoApp.Model.Movie>();
-            CreateMap<MyToDoApp.Model.Movie, Movie>();
+            CreateMap<Movie, Model.Movie>();
+            CreateMap<Model.Movie, Movie>();
 
-            CreateMap<TVSeries, MyToDoApp.Model.TVSeries>();
-            CreateMap<MyToDoApp.Model.TVSeries, TVSeries>();
+            CreateMap<TVSeries, Model.TVSeries>();
+            CreateMap<Model.TVSeries, TVSeries>();
 
-            CreateMap<TEDTalk, MyToDoApp.Model.TEDTalk>();
-            CreateMap<MyToDoApp.Model.TEDTalk, TEDTalk>();
+            CreateMap<TEDTalk, Model.TEDTalk>();
+            CreateMap<Model.TEDTalk, TEDTalk>();
         }
     }
 }

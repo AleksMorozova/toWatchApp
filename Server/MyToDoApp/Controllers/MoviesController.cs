@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyToDoApp.Model;
-using MyToDoApp.Service;
+using MyToDoApp.Services.Contracts;
 
 namespace MyToDoApp.Controllers
 {
@@ -16,38 +16,35 @@ namespace MyToDoApp.Controllers
             _moviesService = moviesService;
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetMovieById(Guid id)
+        {
+            return Ok(await _moviesService.GetById(id));
+        }
+
         [HttpGet("all")]
         public IActionResult GetMoviesToWatch()
         {
-            return Ok(_moviesService.GetMoviesToWatch());
+            return Ok(_moviesService.GetAll());
         }
 
-        [HttpPost("add")]
+        [HttpPost("")]
         public async Task<IActionResult> AddMovie(Movie movie)
         {
-            await _moviesService.AddMovieAsync(movie);
+            await _moviesService.Add(movie);
             return Ok(movie);
         }
 
-        [HttpPost("watch")]
-        public IActionResult WatchMovie(Movie movie)
+        [HttpPost("watch/{id}")]
+        public async Task<IActionResult> WatchMovie(Guid id)
         {
-            _moviesService.WatchMovie(movie);
-            return Ok(movie);
+            return Ok(await _moviesService.WatchMovie(id));
         }
 
-        [HttpPost("reWatch")]
-        public IActionResult ReWatchMovie(Movie movie)
+        [HttpPost("reWatch/{id}")]
+        public async Task<IActionResult> ReWatchMovie(Guid id)
         {
-            _moviesService.ReWatchMovie(movie);
-            return Ok(movie);
-        }
-
-        [HttpPost("bulkUpdate")]
-        public IActionResult UpdateAll(List<Movie> movies)
-        {
-            _moviesService.BulkUpdate(movies);
-            return Ok(movies);
+            return Ok(await _moviesService.ReWatchMovie(id));
         }
     }
 }
