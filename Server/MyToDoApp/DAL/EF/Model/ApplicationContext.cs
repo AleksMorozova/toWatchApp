@@ -18,6 +18,7 @@ namespace MyToDoApp.DAL.EF.Model
         public DbSet<Movie> Movies { get; set; }
         public DbSet<TVSeries> TVSerials { get; set; }
         public DbSet<TEDTalk> TEDTalks { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,5 +29,14 @@ namespace MyToDoApp.DAL.EF.Model
 
             // optionsBuilder.UseSqlServer(@"Server=mssqllocaldb;Database=ApplicationContext;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
+
+    //    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    //    {
+    //        modelBuilder
+    //.Entity<Book>()
+    //.HasMany(p => p.Authors)
+    //.WithMany(p => p.Books)
+    //.UsingEntity(j => j.ToTable("BookAuthor"));
+    //    }
     }
 }

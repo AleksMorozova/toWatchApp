@@ -4,17 +4,22 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Moq;
 using MyToDoApp.DAL.EF.Model;
+using MyToDoApp.Services.Contracts;
 using System;
 using System.Linq;
 using System.Net.Http;
 using TestProject.Consts;
+using WireMock.Server;
 
 namespace TestProject
 {
     public class CustomWebApplicationFactory<TStartup> :
             WebApplicationFactory<TStartup> where TStartup : class
     {
+        public WireMockServer RateMockServer { get; }
+
         public HttpClient CreateAuthClient()
         {
             return WithWebHostBuilder(builder =>
@@ -26,10 +31,30 @@ namespace TestProject
             .CreateClient();
         }
 
+        public CustomWebApplicationFactory()
+        {
+            RateMockServer = WireMockServer.Start();
+        }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.ConfigureServices(services =>
             {
+                // Fake IS3Service service
+                var rateDescriptor = services.SingleOrDefault(
+                    d => d.ServiceType ==
+                        typeof(IRateService));
+
+                services.Remove(rateDescriptor);
+
+                var mock = new Mock<IRateService>();
+                mock.Setup(x => x.GetRate())
+                    .ReturnsAsync(0);
+
+                var rate = mock.Object;
+                services.AddSingleton(mock.Object);
+
+
                 // Use InMemoryDb
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType ==

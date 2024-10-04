@@ -5,6 +5,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using MyToDoApp.Config;
+using MyToDoApp.Controllers;
+using MyToDoApp.Services.Contracts;
+using MyToDoApp.Services;
+using System;
 
 namespace MyToDoApp
 {
@@ -33,8 +37,18 @@ namespace MyToDoApp
             services.AddCors();
 
             // services.AddHostedService();
+            services.AddHttpClient<IRateService, RateService>();
 
             services.AddDBConfiguration(Configuration);
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
         }
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -65,10 +79,10 @@ namespace MyToDoApp
                          "Cache-Control", $"public, max-age={cacheMaxAge}");
                 }
             });
-
+            // app.useId
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -22,6 +22,7 @@ namespace EF
         public DbSet<Movie> Movies { get; set; }
         public DbSet<TVSeries> TVSerials { get; set; }
         public DbSet<TEDTalk> TEDTalks { get; set; }
+        public DbSet<Author> Authors { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -12,16 +12,21 @@ namespace MyToDoApp.Service
     {
         private readonly IBooksRepository _booksRepository;
         private readonly IMapper _mapper;
+        private IRateService _rateService;
 
-        public BooksService(IBooksRepository booksRepository, IMapper mapper)
+        public BooksService(IBooksRepository booksRepository,
+            IRateService rateService,
+            IMapper mapper)
         {
             _booksRepository = booksRepository;
+            _rateService = rateService;
             _mapper = mapper;
         }
 
         public async Task<Book> GetById(Guid id)
         {
             var book = await _booksRepository.GetById(id);
+            var rate = await _rateService.GetRate();
             return _mapper.Map<Book>(book);
         }
 
@@ -34,7 +39,7 @@ namespace MyToDoApp.Service
             }
             return books;
         }
-        public async Task<Book> Add(Book book)
+        public async Task<Book> Add(CreateBook book)
         {
             var newBook = await _booksRepository.AddAsync(_mapper.Map<DAL.Model.Book>(book));
             return _mapper.Map<Book>(newBook);
@@ -47,6 +52,11 @@ namespace MyToDoApp.Service
                 book.IsReaded = true;
             }
             return _mapper.Map<Book>(_booksRepository.Update(book));
+        }
+
+        public Task<Book> Add(Book book)
+        {
+            throw new NotImplementedException();
         }
     }
 }

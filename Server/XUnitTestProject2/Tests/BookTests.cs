@@ -13,6 +13,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using TestProject.Consts;
+using Moq;
+using MyToDoApp.Services.Contracts;
+using WireMock.Server;
+using WireMock.RequestBuilders;
 
 namespace TestProject.Tests
 {
@@ -22,9 +26,11 @@ namespace TestProject.Tests
         private readonly HttpClient client;
         private readonly IServiceScope serviceScope;
         private readonly ApplicationContext context;
+        private readonly WireMockServer rateMockServer;
 
         public BookTests(CustomWebApplicationFactory<Startup> factory)
         {
+            rateMockServer = factory.RateMockServer;
             client = factory.CreateAuthClient();
             serviceScope = factory.Services.CreateScope();
             context = serviceScope.ServiceProvider.GetRequiredService<ApplicationContext>();
@@ -52,6 +58,14 @@ namespace TestProject.Tests
             // Arrange
             var book = Defaults.Books[0];
 
+            //var mock = new Mock<IRateService>();
+            //mock.Setup(x => x.GetRate())
+            //    .ReturnsAsync(0);
+
+            //var repository = mock.Object;
+            //var service = new CustomerService(repository);
+            //var result = service.GetCustomerById(customerId);
+
             // Act
             var response = await client.GetAsync($"Books/8fc22b4c-ffed-4f5e-abe2-6bfe98a54c07");
 
@@ -69,7 +83,7 @@ namespace TestProject.Tests
             {
                 ID = new Guid("8fc22b4c-ffed-4f5e-abe2-6bfe98a54c01"),
                 Title = "Book_2",
-                Author = "Author_2",
+                //Author = new Author { ID = new Guid("8fc22b4c-ffed-4f5e-abe2-6bfe98a54c22"), Name = "Author_2" },
                 Description = "Test2",
                 IsReaded = false
             };

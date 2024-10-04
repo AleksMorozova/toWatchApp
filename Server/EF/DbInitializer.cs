@@ -59,6 +59,20 @@ namespace EF
 
 
             // Look for any students.
+            if (context.Authors.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            var authors = new Author[]
+            {
+                new Author { Name = "Донна Тартт" }
+            };
+
+            context.Authors.AddRange(authors);
+            context.SaveChanges();
+
+            // Look for any book.
             if (context.Books.Any())
             {
                 return;   // DB has been seeded
@@ -66,7 +80,7 @@ namespace EF
 
             var books = new Book[]
             {
-                new Book {Title = "Тайная комната", Author = "Донна Тартт", Description = "Тайная комната", IsReaded = false}
+                new Book {Title = "Тайная комната", Authors = new List<Author>(){ authors.FirstOrDefault() }, Description = "Тайная комната", IsReaded = false}
             };
 
             context.Books.AddRange(books);

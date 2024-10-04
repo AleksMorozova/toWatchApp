@@ -11,15 +11,17 @@ namespace MyToDoApp.Controllers
     public class BooksController : ControllerBase
     {
         private IBooksService _booksService;
-
-        public BooksController(IBooksService booksService)
+        private IRateService _rateService;
+        public BooksController(IBooksService booksService, IRateService rateService)
         {
             _booksService = booksService;
+            _rateService = rateService;
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBookById(Guid id)
         {
+            var rate = await _rateService.GetRate();
             return Ok(await _booksService.GetById(id));
         }
 
@@ -30,9 +32,9 @@ namespace MyToDoApp.Controllers
         }
 
         [HttpPost("")]
-        public async Task<IActionResult> AddBook(Book book)
-        {
-            return Ok(await _booksService.Add(book));
+        public async Task<IActionResult> AddBook(CreateBook book)
+        {//await _booksService.Add(book)
+            return Ok();
         }
 
         [HttpPost("read/{id}")]

@@ -35,6 +35,7 @@ namespace MyToDoApp
                 try
                 {
                     var context = services.GetRequiredService<ApplicationContext>();
+
                     context.Database.EnsureCreated();
                     DbInitializer.Initialize(context);
                 }

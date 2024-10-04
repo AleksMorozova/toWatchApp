@@ -1,5 +1,6 @@
 ﻿using MyToDoApp.DAL.EF.Model;
 using MyToDoApp.DAL.Model;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MyToDoApp.DAL.EF
@@ -48,9 +49,21 @@ namespace MyToDoApp.DAL.EF
                 new TEDTalk {Title = "Inside the mind of a master procrastinator", IsWatched = false, Link = "https://www.youtube.com/watch?v=arj7oStGLkU&list=PLiAqvMJOAIKtu5ZENVgZ_ewYJX3crpTVU"}
             };
 
-            context.TEDTalks.AddRange(tedTalks);
+            // Look for any students.
+            if (context.Authors.Any())
+            {
+                return;   // DB has been seeded
+            }
+
+            var authors = new Author[]
+            {
+                new Author { Name = "Донна Тартт" }
+            };
+
+            context.Authors.AddRange(authors);
             context.SaveChanges();
 
+            // Look for any book.
             if (context.Books.Any())
             {
                 return;   // DB has been seeded
@@ -58,7 +71,7 @@ namespace MyToDoApp.DAL.EF
 
             var books = new Book[]
             {
-                new Book {Title = "Тайная комната", Author = "Донна Тартт", Description = "Тайная комната", IsReaded = false}
+                new Book {Title = "Тайная комната", Authors = new List<Author>(){ authors.FirstOrDefault() }, Description = "Тайная комната", IsReaded = false}
             };
 
             context.Books.AddRange(books);
