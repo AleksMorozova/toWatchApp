@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Movie } from '../../shared/model/Movie.model';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MovieMockService } from './../../../app/shared/service/mock/movie-mock.service';
+import { Observable } from 'rxjs';
+import { MovieService } from 'src/app/shared/service/movie.service';
 
 @Component({
   selector: 'app-movies',
@@ -9,20 +10,19 @@ import { MovieMockService } from './../../../app/shared/service/mock/movie-mock.
 })
 export class MoviesComponent {
   movies: Movie[];
+  myData$: Observable<any>;
 
   constructor(private router: Router,
-                private route: ActivatedRoute,
-    private movieService: MovieMockService) {
+              private route: ActivatedRoute,
+              private movieService: MovieService) {
   }
 
   ngOnInit() {
-    this.movieService.loadMovies().then(res => {
-      this.movies = res;
-    });
+    this.myData$ = this.movieService.loadMovies();
   }
 
   public watchMovie(movie: Movie): void {
-    this.movieService.watchMovie(movie);
+    //this.movieService.watchMovie(movie);
   }
 
   public reWatchMovie(movie: Movie): void {
@@ -30,7 +30,7 @@ export class MoviesComponent {
   }
 
   public addToFavorite(movie: Movie): void {
-    this.movieService.watchMovie(movie);
+    //this.movieService.watchMovie(movie);
   }
 
   public addMovie(): void {
@@ -39,6 +39,6 @@ export class MoviesComponent {
 
   
   public save(): void {
-    this.movieService.batchUpdateMovies(this.movies);
+    //this.movieService.batchUpdateMovies(this.movies);
   }
 }

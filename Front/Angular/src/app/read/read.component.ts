@@ -1,35 +1,39 @@
 import { Component } from '@angular/core';
 import { Book } from './../shared/model/Book.model';
-import { BooksService } from './../shared/service/books.service';
+import { BookService } from '../shared/service/book.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-read',
   templateUrl: './read.component.html'
 })
 export class ReadComponent {
-  books: Book[];
+  books$: Observable<any>;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private booksService: BooksService) {
+              private bookService: BookService) {
   }
 
   ngOnInit() {
-    this.booksService.loadBooks().then(res => {
-      this.books = res;
-    });
+    console.log('TADA ');
+
+    this.books$ = this.bookService.loadBooks();
+
     window.top.addEventListener('placeChangedIn', this.evenListener.bind(this), false);
   }
+
   public evenListener() {
     console.log('TADA even is fire from other component');
-}
+  }
+  
   public readBook(book: Book): void {
-    this.booksService.updateBook(book);
+    //this.bookService.updateBook(book);
   }
 
   public save(): void {
-    this.booksService.batchUpdateBooks(this.books);
+    //this.bookService.batchUpdateBooks(this.books);
   }
 
   public addBook(): void {
@@ -37,6 +41,6 @@ export class ReadComponent {
   }
 
   public addToFavorite(book: Book): void {
-    this.booksService.updateBook(book);
+    //this.bookService.updateBook(book);
   }
 }

@@ -19,15 +19,17 @@ import { NotFoundComponent } from './not-found-page/not-found-page.component';
 
 // Service
 import { TedTalkService } from './shared/service/tedTalk.service';
-import { BooksService } from './shared/service/books.service';
+import { BookService } from './shared/service/book.service';
 import { TVSeriesService } from './shared/service/tv-series.service';
 import { MovieService } from './shared/service/movie.service';
 
 // MOCK Service
 import { MovieMockService } from './shared/service/mock/movie-mock.service';
-import { BooksMockService } from './shared/service/mock/books-mock.service';
+import { BookMockService } from './shared/service/mock/book-mock.service';
 import { TVSeriesMockService } from './shared/service/mock/tv-series-mock.service';
 import { TedTalkMockService } from './shared/service/mock/tedTalk-mock.service';
+import { BookRESTService } from './shared/service/rest/book-rest.service';
+import { MovieRESTService } from './shared/service/rest/movie-rest.service';
 
 @NgModule({
   declarations: [
@@ -50,9 +52,10 @@ import { TedTalkMockService } from './shared/service/mock/tedTalk-mock.service';
   ],
   providers: [
     HttpClient,
-    { provide: BooksService, useClass: BooksMockService },
+    { provide: BookService, useClass: BookService },
+    { provide: MovieService, useClass: MovieService },
+
     { provide: TVSeriesService, useClass: TVSeriesMockService },
-    // { provide: MovieService, useClass: MovieMockService },
     { provide: TedTalkService, useClass: TedTalkMockService }
   ],
   bootstrap: [AppComponent]

@@ -1,40 +1,38 @@
 import { Movie } from '../model/Movie.model';
 import { Injectable } from '@angular/core';
-import { MoviesRESTService } from './rest/movie-rest.service';
+import { MovieRESTService } from './rest/movie-rest.service';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root',
   })
 export class MovieService {
-    constructor(protected moviesRESTService: MoviesRESTService) {
+    private static httpOptions = {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    constructor(protected http: HttpClient) {
     }
 
-    public loadMovies(): Promise<Movie[]> {
-        return new Promise<Movie[]>((resolve, reject) => {
-            this.moviesRESTService.loadActive().then(res => {
-                const movies = <Movie[]>res;
-                if (movies) {
-                    resolve(movies);
-                } else {
-                    reject();
-                }
-            });
-        });
+    loadMovies() : Observable<any> {
+        return this.http.get(`https://localhost:44308/Movies/all`);
     }
 
-    public watchMovie(movie: Movie): void {
-        return this.moviesRESTService.watch(movie);
-    }
-
-    public reWatchMovie(movie: Movie): void {
-        return this.moviesRESTService.reWatch(movie);
-    }
-
-    public addMovie(movie: Movie): void {
-        this.moviesRESTService.insert(movie);
+    public addMovie(movie: Movie): any {
+        return this.http.post<any>('https://localhost:44308/Movies/add', JSON.stringify(movie), MovieService.httpOptions).toPromise();
     }
 
     public batchUpdateMovies(movies: Movie[]): any {
-        return this.moviesRESTService.batchUpdate(movies);
+        return this.http.post<any>('https://localhost:44308/Movies/bulkUpdate', JSON.stringify(movies), MovieService.httpOptions).toPromise();
     }
+
+    public watchMovie(movie: Movie): any {
+        return this.http.post<any>('https://localhost:44308/Movies/watch', JSON.stringify(movie), MovieService.httpOptions).toPromise();
+    }
+
+    public reWatchMovie(movie: Movie): any {
+        return this.http.post<any>('https://localhost:44308/Movies/reWatch', JSON.stringify(movie), MovieService.httpOptions).toPromise();
+    }
+
 }

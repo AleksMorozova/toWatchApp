@@ -1,36 +1,36 @@
-<p-table [value]="books">
+<div *ngIf="books$ | async; let book">
     <ng-template pTemplate="caption">
         Books
     </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Description</th>
-            <th style="width:7%"></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-book>
-        <tr>
-            <td> {{ book.title }} </td>
-            <td> {{ book.author }} </td>
-            <td> {{ book.description }} </td>
-            <td style="width:7%">
-                <div style="text-align:left">
-                    <button style="margin:5px" type="button" pButton icon="pi pi-check" (click)="readBook()"></button>
-                    <button style="margin:5px" type="button" pButton icon="pi pi-star"
-                        (click)="addToFavorite(book)"></button>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
-
-    <ng-template pTemplate="summary" let-rowData>
-        <div style="text-align:left">
-            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-plus" (click)="addBook()"
-                label="Add"></button>
-            <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-save" (click)="save()"
-                label="Save"></button>
-        </div>
-    </ng-template>
-</p-table>
+    <p-table [value]="book">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Description</th>
+                <th style="width:7%"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-book>
+            <tr>
+                <td> {{ book.title }} </td>
+                <td> {{ book.authors }} </td>
+                <td> {{ book.description }} </td>
+                <td style="width:7%">
+                    <div style="text-align:left">
+                        <button style="margin:5px" type="button" pButton icon="pi pi-check" (click)="readBook()"></button>
+                        <button style="margin:5px" type="button" pButton icon="pi pi-star"
+                            (click)="addToFavorite(book)"></button>
+                    </div>
+                </td>
+            </tr>
+        </ng-template> <ng-template pTemplate="summary" let-rowData>
+            <div style="text-align:left">
+                <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-plus" (click)="addBook()"
+                    label="Add"></button>
+                <button style="padding: 5px; margin:5px" type="button" pButton icon="pi pi-save" (click)="save()"
+                    label="Save"></button>
+            </div>
+        </ng-template>
+    </p-table>
+  </div>

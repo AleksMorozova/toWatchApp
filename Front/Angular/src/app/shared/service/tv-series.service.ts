@@ -2,7 +2,9 @@ import { TVSeries } from '../model/TVSeries.model';
 import { Injectable } from '@angular/core';
 import { TVSeriesRESTService } from './rest/tv-series-rest.service';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root',
+})
 export class TVSeriesService {
     constructor(protected tvSeriesRESTService: TVSeriesRESTService) {
     }

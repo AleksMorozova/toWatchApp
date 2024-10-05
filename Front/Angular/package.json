@@ -4,12 +4,12 @@
   "private": true,
   "description": "Example project from an angular.io guide.",
   "scripts": {
-    "start": "ng serve",
+    "start": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve",
     "lint": "tslint ./src/**/*.ts -t verbose",
     "test": "ng test",
-    "build": "ng build --prod",
+    "build": "set NODE_OPTIONS=--openssl-legacy-provider && ng build",
     "e2e": "ng e2e",
-    "ng": "ng"
+    "ng": "set NODE_OPTIONS=--openssl-legacy-provider && ng"
   },
   "keywords": [],
   "author": "",

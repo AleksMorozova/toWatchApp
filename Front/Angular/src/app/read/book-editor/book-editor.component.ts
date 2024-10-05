@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Book } from '../../shared/model/Book.model';
-import { BooksService } from './../../shared/service/books.service';
+import { BookService } from '../../shared/service/book.service';
 
 @Component({
     selector: 'app-book-editot',
@@ -15,7 +15,7 @@ export class BookEditorComponent {
 
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
-                private booksService: BooksService) {
+                private bookService: BookService) {
     }
 
     ngOnInit() {
@@ -29,7 +29,7 @@ export class BookEditorComponent {
         this.bookForm = this.formBuilder.group({
             title: [this.book.title],
             description: [this.book.description],
-            author: [this.book.author],
+            author: [this.book.authors],
         });
     }
 
@@ -37,7 +37,7 @@ export class BookEditorComponent {
         console.log('TADA even is fire');
     }
     public apply(): void {
-        this.booksService.addBook(this.book);
+        this.bookService.addBook(this.book);
         this.router.navigate(['book']);
     }
 }

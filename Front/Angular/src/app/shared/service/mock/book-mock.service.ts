@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
-export class BooksMockService {
+export class BookMockService {
 
     constructor(protected http: HttpClient) {
     }
@@ -12,11 +12,11 @@ export class BooksMockService {
         return new Promise<Book[]>((resolve, reject) => {
             const serials: Book[] = [
                 {
-                    title: 'Происхождение mock', author: 'Den Braun',
+                    title: 'Происхождение mock', authors: 'Den Braun',
                     description: '', id: null
                 },
                 {
-                    title: 'Тайная комната mock', author: 'Донна Тартт',
+                    title: 'Тайная комната mock', authors: 'Донна Тартт',
                     description: '', id: null
                 }];
             resolve(serials);

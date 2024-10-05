@@ -1,3 +1,5 @@
+<div *ngIf="myData$ | async; let movies">
+
 <p-table [value]="movies">
     <ng-template pTemplate="caption">
         Movies
@@ -64,3 +66,4 @@
         </div>
     </ng-template>
 </p-table>
+<div>
